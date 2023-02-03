@@ -31,5 +31,9 @@ urlpatterns = [
     # То есть методом include мы как бы включаем (include же, ну) вместе все
     # пути из "personal_site.urls" для этого пути. Пишу это, потому что
     # не сразу понял, как include этот запомнить.
-    path("personal_site/", include('personal_site.urls')),
+    # # path("personal_site/", include('personal_site.urls')),
+
+    # Но для своего сайта я сделаю пустой путь, потому что мое приложение
+    # personal_site - оно по умолчанию.
+    path("", include("personal_site.urls"))
 ]
