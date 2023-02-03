@@ -10,6 +10,16 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+# Основная логика работы Django может быть описана так:
+# - клиент делает запрос к нам на сервер
+# - запрос попадает на Web-сервер (Apache, Nginx...)
+# - далее Web-сервер через интерфейс wsgi (есть еще асинхронный asgi) передает
+# этот запрос в фреймворк Django
+# - сам Django, исходя из представлений (Views) конкретного своего приложения
+# формирует HTML и возвращает ответ в Web-сервер, а тот - клиенту
+# Это, конечно, все очень упрощенно.
+
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
