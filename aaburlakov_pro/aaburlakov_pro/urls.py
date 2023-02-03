@@ -14,8 +14,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from personal_site.views import index, categories
+
+# В этом файле мы связываем url, которые ввел пользователь, с views из наших
+# приложений.
 
 urlpatterns = [
+    # path("", index), # http://127.0.0.1:8000/
     path("admin/", admin.site.urls),
+    path("cats/", categories), # http://127.0.0.1:8000/cats/
+
+    # Правильная практика - обращаться через include. Все те пути, которые мы назначим
+    # в файле "personal_site.urls", будут начинаться с корневого http://127.0.0.1:8000/personal_site/
+    # "personal_site" мы как раз здесь и указали в первом параметре.
+    # То есть методом include мы как бы включаем (include же, ну) вместе все
+    # пути из "personal_site.urls" для этого пути. Пишу это, потому что
+    # не сразу понял, как include этот запомнить.
+    path("personal_site/", include('personal_site.urls')),
 ]
