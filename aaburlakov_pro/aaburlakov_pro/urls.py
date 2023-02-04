@@ -13,8 +13,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include, re_path
+
+from aaburlakov_pro import settings
 from personal_site.views import index, categories, archive, pageNotFound
 
 # В этом файле мы связываем url, которые ввел пользователь, с views из наших
@@ -23,7 +26,8 @@ from personal_site.views import index, categories, archive, pageNotFound
 urlpatterns = [
     # path("", index), # http://127.0.0.1:8000/
     path("admin/", admin.site.urls),
-    # В url можно помещать типы. Они вот какие могут быть:
+
+    # В url можно помещать параметры. Они вот каких типов они могут быть:
     # str, int, slug, uuid, path
     # path - вообще любая строка
     # str исключает только символ /
@@ -52,6 +56,12 @@ urlpatterns = [
     # и Django поймет, что нужно перенаправить на этот путь
     path("", index, name="home"),
 ]
+
+# На отладочном веб-сервере необходимо сэмулировать работу настоящего сервера
+# для получения ранее загруженных файлов нашему приложению. Для этого пишем
+# такую строчку.
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # В этом модуле можно прописывать переменные handlerXXX для обработки кодов
 # ошибок. Этим переменным назначаются классы view, которые необходмо вызывать

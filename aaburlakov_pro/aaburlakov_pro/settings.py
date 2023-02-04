@@ -18,8 +18,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 # - сам Django, исходя из представлений (Views) конкретного своего приложения
 # формирует HTML и возвращает ответ в Web-сервер, а тот - клиенту
 # Это, конечно, все очень упрощенно.
-
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -132,3 +131,10 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# MEDIA_ROOT обозначает, в кокой папке будут храниться файлы, которые загрузил
+# пользователь.
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# MEDIA_URL добавляет к URL файлов префикс, который указан в переменной.
+MEDIA_URL = "/media/"
