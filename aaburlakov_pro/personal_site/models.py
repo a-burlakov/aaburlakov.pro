@@ -44,7 +44,7 @@ class Article(models.Model):
         BLOG = 'BL', _("Blog post")
         PROJECT = 'PR', _("Project post")
 
-    article_type = models.CharField("Тип статьи",
+    article_type = models.CharField("Тип",
                                     max_length=2,
                                     choices=ArticleTypes.choices,
                                     default=ArticleTypes.BLOG)
