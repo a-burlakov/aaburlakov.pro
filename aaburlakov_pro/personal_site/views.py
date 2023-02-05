@@ -7,10 +7,22 @@ from django.shortcuts import render, redirect
 # Модель предоставляет данные, а Шаблон - шаблон HTML, который надо заполнить
 # данными. Это и есть MTV (MVC).
 # Представления в терминологии MVC - это контроллеры.
+from personal_site.models import Women
+
+menu = ["О сайте", "Добавить статью", "Обратная связь", "Войти"]
 
 
 def index(request):
-    return HttpResponse("Страница приложения personal_site")
+    # Функция render всегда принимает request как первый параметр.
+    # По сути render рендерит HTML на основании запроса и шаблона.
+    posts = Women.objects.all()
+    return render(request, "personal_site/index.html", {"menu": menu,
+                                                        "title": "главная страница",
+                                                        "posts": posts})
+
+
+def about(request):
+    return render(request, "personal_site/about.html", {"title": "о сайте"})
 
 
 def categories(request, cat_id: int):

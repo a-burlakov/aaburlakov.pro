@@ -4,6 +4,7 @@ from .views import *
 
 urlpatterns = [
     path('', index),
+    path('about/', about, name='about')
     # path('blog/<slug:slug>/', index),
     # path('contacts/', None),
     # path('about_me/', None),
