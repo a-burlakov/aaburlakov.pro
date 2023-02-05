@@ -1,7 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 
-
 # В представление (view) попадает строка запроса вида http://127.0.0.1:8000/women/madonna/
 # Представление по внутренней логике собирает информацию по Model и Templates
 # Модель предоставляет данные, а Шаблон - шаблон HTML, который надо заполнить
@@ -16,13 +15,13 @@ def index(request):
     # Функция render всегда принимает request как первый параметр.
     # По сути render рендерит HTML на основании запроса и шаблона.
     posts = Women.objects.all()
-    return render(request, "personal_site/index.html", {"menu": menu,
-                                                        "title": "главная страница",
-                                                        "posts": posts})
+    return render(request, "women/index.html", {"menu": menu,
+                                                "title": "главная страница",
+                                                "posts": posts})
 
 
 def about(request):
-    return render(request, "personal_site/about.html", {"title": "о сайте"})
+    return render(request, "women/about.html", {"title": "о сайте"})
 
 
 def categories(request, cat_id: int):
@@ -42,7 +41,8 @@ def archive(request, year):
     # Кстати, код 301 - это переход на постоянный URL, а 302 - на временный.
     # 301 или 302 - зависит от параметра permanent (по умолчанию False)
     if int(year) > 2020:
-        return redirect("home", permanent=True)  # Происходит код 301 - постоянный
+        return redirect("home",
+                        permanent=True)  # Происходит код 301 - постоянный
 
     return HttpResponse(f"<h1>Год из регулярок:</h1><p>{year}</p>")
 
