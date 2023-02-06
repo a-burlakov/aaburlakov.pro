@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _  # from documentation
 
 
@@ -50,6 +51,25 @@ class Women(models.Model):
 
     is_published = models.BooleanField(default=True)
 
+    # Функция reverse формирует URL с таким же адресом, как указан в
+    # первом параметре.
+    # get_absolute_url - принятое имя для модели, его можно использовать легко
+    def get_absolute_url(self):
+        return reverse("post", kwargs={"post_id": self.pk})
+
+
+class ArticleTags(models.Model):
+    """
+    Tags for article. Used to filter articles interactively.
+    """
+
+    name = models.CharField("Название", max_length=50)
+    archived = models.BooleanField("Архив")
+
+    class Meta:
+        verbose_name = "Тэг"
+        verbose_name_plural = "Тэги"
+
 
 class Article(models.Model):
     """
@@ -79,6 +99,8 @@ class Article(models.Model):
                                     max_length=2,
                                     choices=ArticleTypes.choices,
                                     default=ArticleTypes.BLOG)
+
+    tags = models.ManyToManyField(ArticleTags, verbose_name="Тэги")
 
     def is_blog_post(self):
         return self.article_type == self.ArticleTypes.BLOG
