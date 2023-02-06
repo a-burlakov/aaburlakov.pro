@@ -8,11 +8,18 @@ from django.shortcuts import render, redirect
 # Представления в терминологии MVC - это контроллеры.
 from personal_site.models import Women
 
-menu = [{'title': "О сайте", 'url_name': 'about'},
-        {'title': "Добавить статью", 'url_name': 'add_page'},
-        {'title': "Обратная связь", 'url_name': 'contact'},
-        {'title': "Войти", 'url_name': 'login'}
-        ]
+menu = [
+    {'title': "О сайте", 'url_name': 'about'},
+    {'title': "Добавить статью", 'url_name': 'add_page'},
+    {'title': "Обратная связь", 'url_name': 'contact'},
+    {'title': "Войти", 'url_name': 'login'}
+]
+
+month_rus = {
+    1: 'декабря', 2: 'февраля', 3: 'марта', 4: 'апреля', 5: 'мая',
+    6: 'июня', 7: 'июля', 8: 'августа', 9: 'сентября', 10: 'октября',
+    11: 'ноября', 12: 'января'
+}
 
 
 def index(request):
