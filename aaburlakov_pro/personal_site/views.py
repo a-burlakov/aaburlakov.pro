@@ -20,6 +20,10 @@ def index(request):
                                                 "posts": posts})
 
 
+def aaburlakov(request):
+    return render(request, "personal_site/index.html")
+
+
 def about(request):
     return render(request, "women/about.html", {"title": "о сайте"})
 
