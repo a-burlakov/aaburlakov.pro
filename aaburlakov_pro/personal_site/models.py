@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _  # from documentation
 
 
@@ -63,6 +64,9 @@ class ArticleTags(models.Model):
     Tags for article. Used to filter articles interactively.
     """
 
+    def __str__(self):
+        return self.name
+
     name = models.CharField("Название", max_length=50)
     archived = models.BooleanField("Архив")
 
@@ -82,9 +86,10 @@ class Article(models.Model):
     title = models.CharField("Название", max_length=250)
     sub_title = models.CharField("Подзаголовок", max_length=250, blank=True)
     image = models.ImageField("Главное изображение",
-                              upload_to="article_images/")
+                              upload_to="article_images/",
+                              blank=False)
     text = models.TextField("Текст")
-    date = models.DateTimeField("Дата", auto_now_add=True)
+    date = models.DateField("Дата", null=True, blank=True)
     archived = models.BooleanField("Архив")
     slug = models.SlugField("Путь URL", max_length=80, null=True)
 
@@ -107,6 +112,11 @@ class Article(models.Model):
 
     def is_project_post(self):
         return self.article_type == self.ArticleTypes.PROJECT
+
+    def save(self):
+        if not self.date:
+            self.date = timezone.now()
+        super(Article, self).save()
 
     class Meta:
         ordering = ["-date"]
