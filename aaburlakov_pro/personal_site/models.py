@@ -131,9 +131,9 @@ class Article(models.Model):
 
     def tags_line(self) -> str:
         """
-        Returns line of tags separated by spaces.
+        Returns line of tags separated by spaces. This line is need in some
+        templates to be provided to HTML class for filtering posts.
         """
-
         tags = list(self.tags.all())
         return ' '.join([x.name for x in tags])
 
