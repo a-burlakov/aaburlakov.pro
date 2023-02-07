@@ -33,11 +33,16 @@ def show_post(request, post_id):
 
 
 def aaburlakov(request):
-    recent_posts = Article.objects.order_by('-date')[:5]
+    """
+    View to show full one-page site.
+    """
+    posts = Article.objects.filter(archived=False, article_type='BL').order_by('-date')
+    recent_posts = posts[:5]
+    tags = ArticleTags.objects.filter(archived=False)
     content = {
-        'recent_posts': Article.objects.filter(archived=False, article_type='BL').order_by('-date')[:5],
-        'posts': Article.objects.filter(archived=False).order_by('-date'),
-        'tags': ArticleTags.objects.filter(archived=False)
+        'posts': posts,
+        'recent_posts': recent_posts,
+        'tags': tags
     }
     return render(request, "personal_site/index.html", content)
 
