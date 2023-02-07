@@ -103,6 +103,12 @@ class Article(models.Model):
     archived = models.BooleanField("Архив")
     slug = models.SlugField("Путь URL", max_length=80, null=True)
 
+    def get_absolute_url(self) -> str:
+        """
+        Returns absolute URL for an article.
+        """
+        return reverse("blog", kwargs={"slug": self.slug})
+
     class ArticleTypes(models.TextChoices):
         """
         Types for articles.
@@ -115,13 +121,21 @@ class Article(models.Model):
                                     choices=ArticleTypes.choices,
                                     default=ArticleTypes.BLOG)
 
-    tags = models.ManyToManyField(ArticleTags, verbose_name="Тэги")
-
     def is_blog_post(self) -> bool:
         return self.article_type == self.ArticleTypes.BLOG
 
     def is_project_post(self) -> bool:
         return self.article_type == self.ArticleTypes.PROJECT
+
+    tags = models.ManyToManyField(ArticleTags, verbose_name="Тэги")
+
+    def tags_line(self) -> str:
+        """
+        Returns line of tags separated by spaces.
+        """
+
+        tags = list(self.tags.all())
+        return ' '.join([x.name for x in tags])
 
     def time_to_read(self) -> str:
         """
@@ -142,12 +156,6 @@ class Article(models.Model):
             time_to_read = f'{minutes_to_read} мин. на чтение'
 
         return time_to_read
-
-    def get_absolute_url(self) -> str:
-        """
-        Returns absolute URL for an article.
-        """
-        return reverse("blog", kwargs={"slug": self.slug})
 
     def save(self):
         if not self.date:
