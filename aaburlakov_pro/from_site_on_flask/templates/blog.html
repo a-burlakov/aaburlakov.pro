@@ -24,7 +24,7 @@
         {% for post in posts %}
         <div class="col-lg-4 col-md-6 portfolio-item {{ post.tag }}">
           <div class="portfolio-wrap">
-            <img src="static/img/post-background.png" class="img-fluid" alt="">
+            <img src="{% static 'personal_site/img/post_background.png' %}" class="img-fluid" alt="">
               <!--            <a class="blog-link" href="{{ url_for('post', name=post.path.replace('posts/', '')) }}" data-gallery="blogDetailsGallery" data-glightbox="type: external" >-->
               <div class="portfolio-info">
                   <a class="blog-image-link portfolio-details-lightbox" href="{{ url_for('post', name=post.path.replace('posts/', '')) }}" data-gallery="blogDetailsGallery" data-glightbox="type: external" ><img src="{{ post.picture_path }}" class="blog-image" alt=""></a>

@@ -88,6 +88,16 @@ class Article(models.Model):
     image = models.ImageField("Главное изображение",
                               upload_to="article_images/",
                               blank=True)
+
+    def image_path(self) -> str:
+        """
+        Returns string from "image" field of standard image otherwise.
+        """
+        image_path = self.image
+        if not image_path:
+            image_path = 'article_images/blog-no-picture.png'
+        return image_path
+
     text = models.TextField("Текст")
     date = models.DateField("Дата", null=True, blank=True)
     archived = models.BooleanField("Архив")

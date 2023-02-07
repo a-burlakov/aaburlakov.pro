@@ -1,11 +1,8 @@
+{% load static %}
 {% block blog %}
   <!-- ======= секция блога======= -->
   <section id="blog" class="portfolio">
     <div class="container">
-<!--      <div class="section-title">-->
-<!--        <h2>Блог</h2>-->
-<!--        <p>Заметки о проектах</p>-->
-<!--      </div>-->
       <div class="row">
         <div class="col-lg-12 d-flex justify-content-center">
           <ul id="portfolio-flters">
@@ -19,37 +16,16 @@
       <div class="row portfolio-container">
         {% block content %}
 
-
         {% for post in posts %}
         <div class="col-lg-4 col-md-6 portfolio-item {{ post.tag }}">
           <div class="portfolio-wrap">
-            <img src="static/img/post-background.png" class="img-fluid" alt="">
+            <img src="personal_site/static/img/post-background.png" class="img-fluid" alt="">
               <div class="portfolio-info">
-                        {% comment %}
-                  <a class="blog-image-link portfolio-details-lightbox" href="{{ url_for('post', name=post.path.replace('posts/', '')) }}" data-gallery="blogDetailsGallery" data-glightbox="type: external" ><img src="{{ post.picture_path }}" class="blog-image" alt=""></a>
-                        {% endcomment %}
-                <a class="blog-image-link portfolio-details-lightbox" href=#" data-gallery="blogDetailsGallery" data-glightbox="type: external" ><img src="{{ post.picture_path }}" class="blog-image" alt=""></a>
-                  <h4><a href="#" data-gallery="blogDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox">{{ post.title }}</a></h4>
-        {% comment %}<!--
-<h4><a href="{{ url_for('post', name=post.path.replace('posts/', '')) }}" data-gallery="blogDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox">{{ post.title }}</a></h4>-->
-                        {% endcomment %}
+                  <a class="blog-image-link portfolio-details-lightbox" href="{{ post.get_absolute_url }}" data-gallery="blogDetailsGallery" data-glightbox="type: external" ><img src="{{ post.image_path }}" class="blog-image" alt=""></a>
+                  <h4><a href="{{ post.get_absolute_url }}" data-gallery="blogDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox">{{ post.title }}</a></h4>
                 <p>{{ post.description }}</p>
 
-
-                <!-- Let's set that medium person reads ~1500 symbols a minute.                  -->
-                      {% comment %} {% if post.body|length < 750 %}
-                  {% set time_to_read = "менее минуты на чтение" %}
-                {% elif post.body|length < 1500 %}
-                  {% set time_to_read = "минута на чтение" %}
-                {% else %}
-                  {% set minutes_to_read = (post.body|length // 1500) + 1 %}
-                  {% set time_to_read = minutes_to_read|string + " мин. на чтение" %}
-                {% endif %}
-                       {% endcomment %}
-
-
-                <div class="blog-post-date">дата поста</div>
-<!--              </a>-->
+                <div class="blog-post-date">{{ post.date }} • {{ post.time_to_read }} </div>
           </div>
 
           </div>
