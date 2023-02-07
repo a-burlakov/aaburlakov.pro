@@ -87,7 +87,7 @@ class Article(models.Model):
     sub_title = models.CharField("Подзаголовок", max_length=250, blank=True)
     image = models.ImageField("Главное изображение",
                               upload_to="article_images/",
-                              blank=False)
+                              blank=True)
     text = models.TextField("Текст")
     date = models.DateField("Дата", null=True, blank=True)
     archived = models.BooleanField("Архив")
@@ -107,11 +107,37 @@ class Article(models.Model):
 
     tags = models.ManyToManyField(ArticleTags, verbose_name="Тэги")
 
-    def is_blog_post(self):
+    def is_blog_post(self) -> bool:
         return self.article_type == self.ArticleTypes.BLOG
 
-    def is_project_post(self):
+    def is_project_post(self) -> bool:
         return self.article_type == self.ArticleTypes.PROJECT
+
+    def time_to_read(self) -> str:
+        """
+        Returns a string of information about how long it takes to read
+        a post based on it's body length.
+        """
+
+        # Let's set that medium person reads ~1500 symbols a minute.
+        symbols_per_minute = 1500
+        body_length = len(self.text)
+
+        if body_length < symbols_per_minute / 2:
+            time_to_read = 'менее минуты на чтение'
+        elif body_length < symbols_per_minute:
+            time_to_read = 'минута на чтение'
+        else:
+            minutes_to_read = (body_length // symbols_per_minute) + 1
+            time_to_read = f'{minutes_to_read} мин. на чтение'
+
+        return time_to_read
+
+    def get_absolute_url(self) -> str:
+        """
+        Returns absolute URL for an article.
+        """
+        return reverse("blog", kwargs={"slug": self.slug})
 
     def save(self):
         if not self.date:

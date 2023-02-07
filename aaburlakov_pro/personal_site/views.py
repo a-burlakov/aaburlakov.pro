@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 # Модель предоставляет данные, а Шаблон - шаблон HTML, который надо заполнить
 # данными. Это и есть MTV (MVC).
 # Представления в терминологии MVC - это контроллеры.
-from personal_site.models import Women
+from personal_site.models import Women, Article
 
 menu = [
     {'title': "О сайте", 'url_name': 'about'},
@@ -14,12 +14,6 @@ menu = [
     {'title': "Обратная связь", 'url_name': 'contact'},
     {'title': "Войти", 'url_name': 'login'}
 ]
-
-month_rus = {
-    1: 'декабря', 2: 'февраля', 3: 'марта', 4: 'апреля', 5: 'мая',
-    6: 'июня', 7: 'июля', 8: 'августа', 9: 'сентября', 10: 'октября',
-    11: 'ноября', 12: 'января'
-}
 
 
 def index(request):
@@ -39,7 +33,8 @@ def show_post(request, post_id):
 
 
 def aaburlakov(request):
-    return render(request, "personal_site/index.html")
+    recent_posts = Article.objects.order_by('-date')[:5]
+    return render(request, "personal_site/index.html", {'recent_posts': recent_posts})
 
 
 def about(request):
