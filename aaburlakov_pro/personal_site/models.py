@@ -36,6 +36,7 @@ from django.utils.translation import gettext_lazy as _  # from documentation
 # а get(). Например, Women.objects.get(pk=3).
 # Он будет вызывать исключения, если объектов возвратится больше 1 или 0.
 
+
 # Если мы хотим еще и сортировку, то нужно использовать order_by().
 # Например, Women.objects.filter(pk__lte=4).order_by('title'). В общем, это
 # метод queryset.
@@ -88,8 +89,9 @@ class ArticleTypes(models.TextChoices):
     """
     Types for articles. Used as enumeration for Article model.
     """
-    BLOG = 'BL', _("Blog post")
-    PROJECT = 'PR', _("Project post")
+
+    BLOG = "BL", _("Blog post")
+    PROJECT = "PR", _("Project post")
 
 
 class Article(models.Model):
@@ -97,19 +99,24 @@ class Article(models.Model):
     Article for site blog or resume block.
     """
 
+    x = 1
+    y = 2
+    z = 3
+    if x > 3 and z < 5:
+        y = 55
+
     title = models.CharField("Название", max_length=250)
     sub_title = models.CharField("Подзаголовок", max_length=250, blank=True)
     date = models.DateField("Дата", null=True, blank=True)
     text = models.TextField("Текст")
     tags = models.ManyToManyField(ArticleTags, verbose_name="Тэги")
-    image = models.ImageField("Главное изображение",
-                              upload_to="article_images/",
-                              blank=True)
+    image = models.ImageField(
+        "Главное изображение", upload_to="article_images/", blank=True
+    )
     slug = models.SlugField("Путь URL", max_length=80, null=True)
-    article_type = models.CharField("Тип",
-                                    max_length=2,
-                                    choices=ArticleTypes.choices,
-                                    default=ArticleTypes.BLOG)
+    article_type = models.CharField(
+        "Тип", max_length=2, choices=ArticleTypes.choices, default=ArticleTypes.BLOG
+    )
     archived = models.BooleanField("Архив")
 
     class Meta:
@@ -132,10 +139,10 @@ class Article(models.Model):
         return reverse("blog", kwargs={"slug": self.slug})
 
     def is_blog_post(self) -> bool:
-        return self.article_type == self.ArticleTypes.BLOG
+        return self.article_type == ArticleTypes.BLOG
 
     def is_project_post(self) -> bool:
-        return self.article_type == self.ArticleTypes.PROJECT
+        return self.article_type == ArticleTypes.PROJECT
 
     def tags_line(self) -> str:
         """
@@ -143,7 +150,7 @@ class Article(models.Model):
         templates to be provided to HTML class for filtering posts.
         """
         tags = list(self.tags.all())
-        return ' '.join([x.name for x in tags])
+        return " ".join([x.name for x in tags])
 
     def time_to_read(self) -> str:
         """
@@ -156,12 +163,12 @@ class Article(models.Model):
         body_length = len(self.text)
 
         if body_length < symbols_per_minute / 2:
-            time_to_read = 'менее минуты на чтение'
+            time_to_read = "менее минуты на чтение"
         elif body_length < symbols_per_minute:
-            time_to_read = 'минута на чтение'
+            time_to_read = "минута на чтение"
         else:
             minutes_to_read = (body_length // symbols_per_minute) + 1
-            time_to_read = f'{minutes_to_read} мин. на чтение'
+            time_to_read = f"{minutes_to_read} мин. на чтение"
 
         return time_to_read
 
@@ -171,5 +178,5 @@ class Article(models.Model):
         """
         image_path = self.image
         if not image_path:
-            image_path = 'article_images/blog-no-picture.png'
+            image_path = "article_images/blog-no-picture.png"
         return image_path
