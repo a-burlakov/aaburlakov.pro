@@ -58,6 +58,7 @@ class Women(models.Model):
     # Второй - устанавливает в поле текущее время каждый раз при изменении.
     time_update = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=True)
+    cat = models.ForeignKey("Category", on_delete=models.PROTECT, null=True)
 
     def __str__(self):
         return self.title
@@ -66,23 +67,11 @@ class Women(models.Model):
     # первом параметре.
     # get_absolute_url - принятое имя для модели, его можно использовать легко
     def get_absolute_url(self):
-        return reverse("post", kwargs={"post_id": self.pk})
+        return reverse("post_women", kwargs={"post_id": self.pk})
 
 
-class ArticleTags(models.Model):
-    """
-    Tags for article. Used to filter articles interactively.
-    """
-
-    name = models.CharField("Название", max_length=50)
-    archived = models.BooleanField("Архив")
-
-    class Meta:
-        verbose_name = "Тэг"
-        verbose_name_plural = "Тэги"
-
-    def __str__(self):
-        return self.name
+class Category(models.Model):
+    name = models.CharField(max_length=100, db_index=True)
 
 
 class ArticleTypes(models.TextChoices):
@@ -99,17 +88,11 @@ class Article(models.Model):
     Article for site blog or resume block.
     """
 
-    x = 1
-    y = 2
-    z = 3
-    if x > 3 and z < 5:
-        y = 55
-
     title = models.CharField("Название", max_length=250)
     sub_title = models.CharField("Подзаголовок", max_length=250, blank=True)
     date = models.DateField("Дата", null=True, blank=True)
     text = models.TextField("Текст")
-    tags = models.ManyToManyField(ArticleTags, verbose_name="Тэги")
+    tags = models.ManyToManyField("ArticleTags", verbose_name="Тэги")
     image = models.ImageField(
         "Главное изображение", upload_to="article_images/", blank=True
     )
@@ -180,3 +163,19 @@ class Article(models.Model):
         if not image_path:
             image_path = "article_images/blog-no-picture.png"
         return image_path
+
+
+class ArticleTags(models.Model):
+    """
+    Tags for article. Used to filter articles interactively.
+    """
+
+    name = models.CharField("Название", max_length=50)
+    archived = models.BooleanField("Архив")
+
+    class Meta:
+        verbose_name = "Тэг"
+        verbose_name_plural = "Тэги"
+
+    def __str__(self):
+        return self.name
