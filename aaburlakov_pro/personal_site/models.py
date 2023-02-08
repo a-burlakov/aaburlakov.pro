@@ -4,6 +4,16 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _  # from documentation
 
 
+# https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/
+# All database fields
+# Custom manager attributes
+# class Meta
+# def __str__()
+# def save()
+# def get_absolute_url()
+# Any custom methods
+
+
 # Одно из не сразу очевидных преимуществ использования ORM - это
 # возможность использовать одно и то же приложение с ORM для любых БД,
 # которые поддерживаются ORM.
@@ -37,20 +47,19 @@ class Women(models.Model):
     Женщины (спасибо selfedu за интересные уроки).
     """
 
-    def __str__(self):
-        return self.title
-
     title = models.CharField(max_length=250)
     content = models.TextField(blank=True)
     photo = models.ImageField(upload_to="photos/%Y/%m/%d/")
+    time_create = models.DateTimeField(auto_now_add=True)
 
     # Новые для меня параметры "auto_now_add" и "auto_now".
     # Первый - устанавливает в поле текущее время в момент первой записи.
     # Второй - устанавливает в поле текущее время каждый раз при изменении.
-    time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
-
     is_published = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.title
 
     # Функция reverse формирует URL с таким же адресом, как указан в
     # первом параметре.
@@ -64,9 +73,6 @@ class ArticleTags(models.Model):
     Tags for article. Used to filter articles interactively.
     """
 
-    def __str__(self):
-        return self.name
-
     name = models.CharField("Название", max_length=50)
     archived = models.BooleanField("Архив")
 
@@ -74,34 +80,50 @@ class ArticleTags(models.Model):
         verbose_name = "Тэг"
         verbose_name_plural = "Тэги"
 
+    def __str__(self):
+        return self.name
+
+
+class ArticleTypes(models.TextChoices):
+    """
+    Types for articles. Used as enumeration for Article model.
+    """
+    BLOG = 'BL', _("Blog post")
+    PROJECT = 'PR', _("Project post")
+
 
 class Article(models.Model):
     """
     Article for site blog or resume block.
     """
 
-    def __str__(self):
-        return self.title
-
     title = models.CharField("Название", max_length=250)
     sub_title = models.CharField("Подзаголовок", max_length=250, blank=True)
+    date = models.DateField("Дата", null=True, blank=True)
+    text = models.TextField("Текст")
+    tags = models.ManyToManyField(ArticleTags, verbose_name="Тэги")
     image = models.ImageField("Главное изображение",
                               upload_to="article_images/",
                               blank=True)
-
-    def image_path(self) -> str:
-        """
-        Returns string from "image" field of standard image otherwise.
-        """
-        image_path = self.image
-        if not image_path:
-            image_path = 'article_images/blog-no-picture.png'
-        return image_path
-
-    text = models.TextField("Текст")
-    date = models.DateField("Дата", null=True, blank=True)
-    archived = models.BooleanField("Архив")
     slug = models.SlugField("Путь URL", max_length=80, null=True)
+    article_type = models.CharField("Тип",
+                                    max_length=2,
+                                    choices=ArticleTypes.choices,
+                                    default=ArticleTypes.BLOG)
+    archived = models.BooleanField("Архив")
+
+    class Meta:
+        ordering = ["-date"]
+        verbose_name = "Пост"
+        verbose_name_plural = "Посты"
+
+    def __str__(self):
+        return self.title
+
+    def save(self):
+        if not self.date:
+            self.date = timezone.now()
+        super(Article, self).save()
 
     def get_absolute_url(self) -> str:
         """
@@ -109,25 +131,11 @@ class Article(models.Model):
         """
         return reverse("blog", kwargs={"slug": self.slug})
 
-    class ArticleTypes(models.TextChoices):
-        """
-        Types for articles.
-        """
-        BLOG = 'BL', _("Blog post")
-        PROJECT = 'PR', _("Project post")
-
-    article_type = models.CharField("Тип",
-                                    max_length=2,
-                                    choices=ArticleTypes.choices,
-                                    default=ArticleTypes.BLOG)
-
     def is_blog_post(self) -> bool:
         return self.article_type == self.ArticleTypes.BLOG
 
     def is_project_post(self) -> bool:
         return self.article_type == self.ArticleTypes.PROJECT
-
-    tags = models.ManyToManyField(ArticleTags, verbose_name="Тэги")
 
     def tags_line(self) -> str:
         """
@@ -157,12 +165,11 @@ class Article(models.Model):
 
         return time_to_read
 
-    def save(self):
-        if not self.date:
-            self.date = timezone.now()
-        super(Article, self).save()
-
-    class Meta:
-        ordering = ["-date"]
-        verbose_name = "Пост"
-        verbose_name_plural = "Посты"
+    def image_path(self) -> str:
+        """
+        Returns string from "image" field of standard image otherwise.
+        """
+        image_path = self.image
+        if not image_path:
+            image_path = 'article_images/blog-no-picture.png'
+        return image_path
