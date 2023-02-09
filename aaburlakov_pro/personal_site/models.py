@@ -43,6 +43,9 @@ from django.utils.translation import gettext_lazy as _  # from documentation
 #
 # Методы filter, order_by и другие можно использовать цепочкой. С ними будет
 # формироваться SQL-запроса.
+from aaburlakov_pro import settings
+
+
 class Women(models.Model):
     """
     Женщины (спасибо selfedu за интересные уроки).
@@ -168,11 +171,13 @@ class Article(models.Model):
 
     def image_path(self) -> str:
         """
-        Returns string from "image" field of standard image otherwise.
+        Returns string from "image" field or standard image otherwise.
         """
-        image_path = self.image
-        if not image_path:
-            image_path = "article_images/blog-no-picture.png"
+
+        if self.image:
+            image_path = self.image.url
+        else:
+            image_path = settings.MEDIA_URL + "article_images/blog-no-picture.png"
         return image_path
 
 
