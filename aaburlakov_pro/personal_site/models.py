@@ -60,6 +60,11 @@ class Women(models.Model):
     is_published = models.BooleanField(default=True)
     cat = models.ForeignKey("Category", on_delete=models.PROTECT, null=True)
 
+    class Meta:
+        verbose_name = "Известные женщины"
+        verbose_name_plural = "Известные женщины"
+        ordering = ["time_create", "title"]
+
     def __str__(self):
         return self.title
 
