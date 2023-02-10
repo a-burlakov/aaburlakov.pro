@@ -55,7 +55,7 @@ class Women(models.Model):
     content = models.TextField(blank=True)
     photo = models.ImageField(upload_to="photos/%Y/%m/%d/")
     time_create = models.DateTimeField(auto_now_add=True)
-
+    slug = models.SlugField("URL-путь", unique=True, max_length=100, db_index=True)
     # Новые для меня параметры "auto_now_add" и "auto_now".
     # Первый - устанавливает в поле текущее время в момент первой записи.
     # Второй - устанавливает в поле текущее время каждый раз при изменении.
@@ -110,7 +110,9 @@ class Article(models.Model):
     image = models.ImageField(
         "Главное изображение", upload_to="article_images/", blank=True
     )
-    slug = models.SlugField("Путь URL", max_length=80, null=True)
+    slug = models.SlugField(
+        "Путь URL", max_length=80, null=True, unique=True, db_index=True
+    )
     article_type = models.CharField(
         "Тип", max_length=2, choices=ArticleTypes.choices, default=ArticleTypes.BLOG
     )
