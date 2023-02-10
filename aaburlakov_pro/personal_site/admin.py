@@ -24,6 +24,7 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display_links = ("id", "title", "sub_title")
     search_fields = ("title", "sub_title", "text", "article_type")
     list_editable = ("slug", "archived")
+    prepopulated_fields = {"slug": ("title",)}
 
 
 class ArticleTagsAdmin(admin.ModelAdmin):
