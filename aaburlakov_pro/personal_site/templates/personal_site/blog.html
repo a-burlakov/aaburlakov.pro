@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 {% block blog %}
   <!-- ======= секция блога======= -->
   <section id="blog" class="portfolio">
@@ -19,14 +20,15 @@
         {% for post in posts %}
         <div class="col-lg-4 col-md-6 portfolio-item {{ post.tags_line }}">
           <div class="portfolio-wrap">
-            <img src="personal_site/static/img/post-background.png" class="img-fluid" alt="">
+            <img src="{% static 'personal_site/img/post-background.png' %}" width="100%" height="100%" class="img-fluid" alt="" >
               <div class="portfolio-info">
-                  <a class="blog-image-link" href="{{ post.get_absolute_url }}"  ><img src="{{ post.image_path }}" class="blog-image" alt=""></a>
+                  <a class="blog-image-link" href="{{ post.get_absolute_url }}"><img src="{{ post.image_path }}" class="blog-image" alt=""></a>
                   <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
-                <p>{{ post.description }}</p>
-
-                <div class="blog-post-date">{{ post.date }} • {{ post.time_to_read }} </div>
-          </div>
+                <p>{{ post.sub_title }}</p>
+                {% language 'ru' %}
+                <div class="blog-post-date">{{ post.date|date:"j E Y г." }} • {{ post.time_to_read }} </div>
+                {% endlanguage %}
+</div>
 
           </div>
 
