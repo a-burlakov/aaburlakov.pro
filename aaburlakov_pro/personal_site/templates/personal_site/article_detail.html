@@ -16,12 +16,12 @@ body::before {
             <h2 class="portfolio-title">{{ article.title }}</h2>
           </div>
           <div class="col-lg-8 portfolio-info">
-            {% if article.description|length > 1 %}
-            <h3>{{ article.description }}</h3>
+            {% if article.sub_title|length > 1 %}
+            <h3>{{ article.sub_title }}</h3>
               {% endif %}
 
             {% language 'ru' %}
-            <p class="post-date">{{ article.date|date:"j E, Y" }}</p>
+            <p class="post-date">{{ article.date|date:"j E Y г." }}</p>
             {% endlanguage %}
             <p>
               {{ article.text|safe }}
