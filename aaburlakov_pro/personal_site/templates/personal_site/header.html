@@ -39,7 +39,7 @@
             <ul class="posts-list">
             {% for post in recent_posts %}
             <li>
-              <a href="{{ post.get_absolute_url }}" data-gallery="blogDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox">
+              <a href="{{ post.get_absolute_url }}">
                 <div class="post-title">{{ post.title }}</div>
                 {% language 'ru' %}
                 <div class="post-date">{{ post.date|date:"j E, Y" }} • {{ post.time_to_read }} </div>

@@ -16,11 +16,6 @@ menu = [
 ]
 
 
-# В Джанго есть два вида тегов:
-# Простые тэги
-# Включающие тэги
-
-
 def index(request):
     # Функция render всегда принимает request как первый параметр.
     # По сути render рендерит HTML на основании запроса и шаблона.
@@ -64,11 +59,13 @@ def aaburlakov(request):
     return render(request, "personal_site/index.html", content)
 
 
-def article_details(request, article_slug):
+def article_detail(request, article_slug):
     """
     View to show a specific article.
     """
     article = get_object_or_404(Article, slug=article_slug)
+    content = {"article": article}
+    return render(request, "personal_site/article_detail.html", content)
 
 
 def about(request):

@@ -135,7 +135,7 @@ class Article(models.Model):
         """
         Returns absolute URL for an article.
         """
-        return reverse("blog", kwargs={"slug": self.slug})
+        return reverse("article_detail", kwargs={"article_slug": self.slug})
 
     def is_blog_post(self) -> bool:
         return self.article_type == ArticleTypes.BLOG

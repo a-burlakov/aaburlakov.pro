@@ -18,7 +18,13 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 
 from aaburlakov_pro import settings
-from personal_site.views import index, categories, archive, pageNotFound
+from personal_site.views import (
+    index,
+    categories,
+    archive,
+    pageNotFound,
+    article_detail,
+)
 
 # В этом файле мы связываем url, которые ввел пользователь, с views из наших
 # приложений.
@@ -26,18 +32,15 @@ from personal_site.views import index, categories, archive, pageNotFound
 urlpatterns = [
     # path("", index), # http://127.0.0.1:8000/
     path("admin/", admin.site.urls),
-
     # В url можно помещать параметры. Они вот каких типов они могут быть:
     # str, int, slug, uuid, path
     # path - вообще любая строка
     # str исключает только символ /
     # slug (переводится как "шлюз", а не "слизняк") - символы для URL, то есть ascii, дефис и подчеркивание
     # uuid - символы для идентификаторов, то есть дефис и ascii
-    path("cats/<int:cat_id>/", categories), # http://127.0.0.1:8000/cats/
-
+    path("cats/<int:cat_id>/", categories),  # http://127.0.0.1:8000/cats/
     # В URL можно поместить даже обработку регулярных выражений через "re_path()"
-    re_path(r'^archive/(?P<year>[0-9]{4})/', archive),
-
+    re_path(r"^archive/(?P<year>[0-9]{4})/", archive),
     # Правильная практика - обращаться через include. Все те пути, которые мы назначим
     # в файле "personal_site.urls", будут начинаться с корневого http://127.0.0.1:8000/personal_site/
     # "personal_site" мы как раз здесь и указали в первом параметре.
@@ -45,11 +48,9 @@ urlpatterns = [
     # пути из "personal_site.urls" для этого пути. Пишу это, потому что
     # не сразу понял, как include этот запомнить.
     # # path("personal_site/", include('personal_site.urls')),
-
     # Но для своего сайта я сделаю пустой путь, потому что мое приложение
     # personal_site - оно по умолчанию.
     path("", include("personal_site.urls")),
-
     # Параметр name - очень важная вещь. Она позволяет закрепить за именем
     # этот путь, чтобы не хардкодить его по всему проекту, если мы будем на
     # него ссылаться. Например, извне можно написать 'return redirect("home")',

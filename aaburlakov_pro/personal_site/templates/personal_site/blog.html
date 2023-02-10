@@ -21,8 +21,8 @@
           <div class="portfolio-wrap">
             <img src="personal_site/static/img/post-background.png" class="img-fluid" alt="">
               <div class="portfolio-info">
-                  <a class="blog-image-link portfolio-details-lightbox" href="{{ post.get_absolute_url }}" data-gallery="blogDetailsGallery" data-glightbox="type: external" ><img src="{{ post.image_path }}" class="blog-image" alt=""></a>
-                  <h4><a href="{{ post.get_absolute_url }}" data-gallery="blogDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox">{{ post.title }}</a></h4>
+                  <a class="blog-image-link" href="{{ post.get_absolute_url }}"  ><img src="{{ post.image_path }}" class="blog-image" alt=""></a>
+                  <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
                 <p>{{ post.description }}</p>
 
                 <div class="blog-post-date">{{ post.date }} • {{ post.time_to_read }} </div>

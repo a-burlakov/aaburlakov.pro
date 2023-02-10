@@ -1,0 +1,34 @@
+{% extends "personal_site/base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<style>
+body::before {
+	background: #040404 {% static "personal_site/img/post.jpg" %});
+}
+</style>
+
+    <!-- ======= шаблон для поста ======= -->
+    <div id="portfolio-details" class="portfolio-details">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <h2 class="portfolio-title">{{ article.title }}</h2>
+          </div>
+          <div class="col-lg-8 portfolio-info">
+            {% if article.description|length > 1 %}
+            <h3>{{ article.description }}</h3>
+              {% endif %}
+
+            {% language 'ru' %}
+            <p class="post-date">{{ article.date|date:"j E, Y" }}</p>
+            {% endlanguage %}
+            <p>
+              {{ article.text|safe }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div><!-- конец карточки -->
+  <!-- конец поста -->
+{% endblock %}
