@@ -4,12 +4,15 @@
 {% block content %}
 <style>
 body::before {
-	background: #040404 {% static "personal_site/img/post.jpg" %});
+	background: #ffffff {% static "personal_site/img/post.jpg" %});
 }
 </style>
 
     <!-- ======= шаблон для поста ======= -->
     <div id="portfolio-details" class="portfolio-details">
+      <form>
+ <input type="button" value="Назад..." onclick="history.back()">
+</form>
       <div class="container">
         <div class="row">
           <div class="col-lg-8">
