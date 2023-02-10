@@ -5,7 +5,7 @@ from .models import *
 
 
 class WomenAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "time_create", "photo", "is_published")
+    list_display = ("id", "title", "time_create", "slug", "photo", "is_published")
     list_display_links = ("id", "title")
     search_fields = ("title", "content")
 

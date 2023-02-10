@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 # В представление (view) попадает строка запроса вида http://127.0.0.1:8000/women/madonna/
 # Представление по внутренней логике собирает информацию по Model и Templates
@@ -62,6 +62,13 @@ def aaburlakov(request):
     tags = ArticleTags.objects.filter(archived=False)
     content = {"posts": posts, "recent_posts": recent_posts, "tags": tags}
     return render(request, "personal_site/index.html", content)
+
+
+def article_details(request, article_slug):
+    """
+    View to show a specific article.
+    """
+    article = get_object_or_404(Article, slug=article_slug)
 
 
 def about(request):
