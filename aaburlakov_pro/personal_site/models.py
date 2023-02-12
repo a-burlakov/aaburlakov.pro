@@ -44,6 +44,7 @@ from django.utils.translation import gettext_lazy as _  # from documentation
 # Методы filter, order_by и другие можно использовать цепочкой. С ними будет
 # формироваться SQL-запроса.
 #
+#
 from aaburlakov_pro import settings
 
 
