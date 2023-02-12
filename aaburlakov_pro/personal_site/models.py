@@ -44,6 +44,7 @@ from django.utils.translation import gettext_lazy as _  # from documentation
 # Методы filter, order_by и другие можно использовать цепочкой. С ними будет
 # формироваться SQL-запроса.
 #
+#
 from aaburlakov_pro import settings
 
 
@@ -81,12 +82,20 @@ class Women(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=100, db_index=True)
+    slug = models.SlugField(
+        max_length=255,
+        null=True,
+        blank=False,
+        unique=True,
+        db_index=True,
+        verbose_name="URL",
+    )
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("category", kwargs={"cat_id": self.pk})
+        return reverse("category", kwargs={"cat_slug": self.slug})
 
 
 class ArticleTypes(models.TextChoices):

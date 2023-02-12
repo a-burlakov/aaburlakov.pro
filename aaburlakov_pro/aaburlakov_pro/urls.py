@@ -19,7 +19,6 @@ from django.urls import path, include, re_path
 
 from aaburlakov_pro import settings
 from personal_site.views import (
-    index,
     categories,
     archive,
     pageNotFound,

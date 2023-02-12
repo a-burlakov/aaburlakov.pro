@@ -6,6 +6,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 # Модель предоставляет данные, а Шаблон - шаблон HTML, который надо заполнить
 # данными. Это и есть MTV (MVC).
 # Представления в терминологии MVC - это контроллеры.
+from django.views.generic import ListView
+
 from personal_site.forms import AddPostForm
 from personal_site.models import Women, Article, ArticleTags, Category
 
@@ -17,36 +19,67 @@ menu = [
 ]
 
 
-def index(request):
-    # Функция render всегда принимает request как первый параметр.
-    # По сути render рендерит HTML на основании запроса и шаблона.
-    posts = Women.objects.all()
-    context = {
-        "menu": menu,
-        "title": "Главная страница",
-        "posts": posts,
-        "cat_selected": 0,
-    }
-    return render(request, "women/index.html", context=context)
+class WomenHome(ListView):
+    model = Women
+    template_name = "women/index.html"
+
+    # Чтобы в классах представлений назначать данные, необходимо
+    # использовать вот такую функцию "get_context_data()".
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Главная страница"
+        context["menu"] = menu
+        context["cat_selected"] = 0
+        return context
+
+    # Здесь, через эту функцию, можно определит, какой запрос будет использоваться
+    # для модели в этой вьюшке.
+    def get_queryset(self):
+        return Women.objects.filter(is_published=True)
+
+
+# def index(request):
+#     # Функция render всегда принимает request как первый параметр.
+#     # По сути render рендерит HTML на основании запроса и шаблона.
+#     posts = Women.objects.all()
+#     context = {
+#         "menu": menu,
+#         "title": "Главная страница",
+#         "posts": posts,
+#         "cat_selected": 0,
+#     }
+#     return render(request, "women/index.html", context=context)
 
 
 def show_post(request, post_id):
     return HttpResponse(f"Отображение статьи с id = {post_id}")
 
 
-def show_category(request, cat_id):
-    posts = Women.objects.filter(cat=cat_id)
+class WomenCategory(ListView):
+    model = Women
+    template_name = "women/index.html"
+    context_object_name = "posts"
+    allow_empty = False  # Генерирует404 статей нет
 
-    if len(posts) == 0:
-        raise Http404()
+    def get_queryset(self):
+        return Women.objects.filter(
+            cat__slug=self.kwargs["cat_slug"], is_published=True
+        )
 
-    context = {
-        "menu": menu,
-        "title": "По рубрикам",
-        "posts": posts,
-        "cat_selected": cat_id,
-    }
-    return render(request, "women/index.html", context=context)
+
+# def show_category(request, cat_id):
+#     posts = Women.objects.filter(cat=cat_id)
+#
+#     if len(posts) == 0:
+#         raise Http404()
+#
+#     context = {
+#         "menu": menu,
+#         "title": "По рубрикам",
+#         "posts": posts,
+#         "cat_selected": cat_id,
+#     }
+#     return render(request, "women/index.html", context=context)
 
 
 def aaburlakov(request):
