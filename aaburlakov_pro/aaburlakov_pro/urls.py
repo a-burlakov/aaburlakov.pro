@@ -18,12 +18,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 
 from aaburlakov_pro import settings
-from personal_site.views import (
-    categories,
-    archive,
-    pageNotFound,
-    article_detail,
-)
+from personal_site.views import categories, archive, pageNotFound
 
 # В этом файле мы связываем url, которые ввел пользователь, с views из наших
 # приложений.

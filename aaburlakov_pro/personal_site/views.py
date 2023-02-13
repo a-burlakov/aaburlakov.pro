@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 # Модель предоставляет данные, а Шаблон - шаблон HTML, который надо заполнить
 # данными. Это и есть MTV (MVC).
 # Представления в терминологии MVC - это контроллеры.
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from personal_site.forms import AddPostForm
 from personal_site.models import Women, Article, ArticleTags, Category
@@ -93,13 +93,17 @@ def aaburlakov(request):
     return render(request, "personal_site/index.html", content)
 
 
-def article_detail(request, article_slug):
+class ArticleDetail(DetailView):
     """
     View to show a specific article.
     """
-    article = get_object_or_404(Article, slug=article_slug)
-    content = {"article": article}
-    return render(request, "personal_site/article_detail.html", content)
+
+    model = Article
+    template_name = "personal_site/article_detail.html"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 def about(request):
