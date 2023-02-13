@@ -159,7 +159,7 @@ class Article(models.Model):
         for showing at web-site.
         """
         tags = list(self.tags.all())
-        return "".join([f"#{x.name}" for x in tags])
+        return " ".join([f"#{x.name}" for x in tags])
 
     def tags_line_for_html(self) -> str:
         """

@@ -7,15 +7,16 @@
     {% include "personal_site/header.html" %}
     {% endblock %}
 
-    {% article_list "PR" %}
-
     {% article_list "BL" %}
+
+    {% article_list "PR" %}
 
     {% comment %}
 
         {% block blog %}
-        {% include "personal_site/blog.html" %}
+        {% include "personal_site/inclusion_tags/article_list.html" %}
         {% endblock %}
+
 
     {% endcomment %}
 
