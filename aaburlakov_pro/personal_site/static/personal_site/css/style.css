@@ -171,7 +171,7 @@ h1, h2, h3, h4, h5, h6 {
      font-size: 14px;
 }
 
-#header .posts-list .post-date {
+#header .posts-list .post-date{
     color: rgb(58 57 61);
     font-style: noitalic;
     font-size: 12px;
@@ -933,6 +933,12 @@ section .container {
   margin-top: 0px;
   padding: 0px;
 }
+.portfolio-details .portfolio-info .post-tags {
+  font-size: 14px;
+  margin-bottom: 5px;
+  margin-top: 0px;
+  padding: 0px;
+}
 .portfolio-details .portfolio-info ul {
   list-style: none;
   padding: 0;
@@ -964,11 +970,12 @@ section .container {
   background-color: rgba(78, 142, 219, 1);
 }
 
-.blog-post-date {
+.blog-post-date, .blog-post-tags   {
     color: rgb(58 57 61);
     font-size: 14px;
     padding-top: 8px;
 }
+
 
 .blog-image {
     max-width: 100%;
@@ -986,7 +993,7 @@ section .container {
     margin-bottom: 20px;
     object-fit: cover;
     border: 1px solid #70757b;
-    opacity: 0.9;
+    opacity: 1;
 }
 
 [alt="post-image"] {
