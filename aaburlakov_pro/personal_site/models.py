@@ -145,7 +145,7 @@ class Article(models.Model):
         """
         Returns absolute URL for an article.
         """
-        return reverse("article_detail", kwargs={"article_slug": self.slug})
+        return reverse("article_detail", kwargs={"slug": self.slug})
 
     def is_blog_post(self) -> bool:
         return self.article_type == ArticleTypes.BLOG
@@ -154,6 +154,14 @@ class Article(models.Model):
         return self.article_type == ArticleTypes.PROJECT
 
     def tags_line(self) -> str:
+        """
+        Returns line of tags with "#" separated by spaces. This line is need
+        for showing at web-site.
+        """
+        tags = list(self.tags.all())
+        return "".join([f"#{x.name}" for x in tags])
+
+    def tags_line_for_html(self) -> str:
         """
         Returns line of tags separated by spaces. This line is need in some
         templates to be provided to HTML class for filtering posts.
