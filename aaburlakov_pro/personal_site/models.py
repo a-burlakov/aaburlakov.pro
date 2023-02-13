@@ -116,9 +116,9 @@ class Article(models.Model):
     sub_title = models.CharField("Подзаголовок", max_length=250, blank=True)
     date = models.DateField("Дата", null=True, blank=True)
     text = models.TextField("Текст")
-    tags = models.ManyToManyField("ArticleTags", verbose_name="Тэги")
+    tags = models.ManyToManyField("ArticleTags", verbose_name="Тэги", blank=True)
     image = models.ImageField(
-        "Главное изображение", upload_to="article_images/", blank=True
+        "Главное изображение", upload_to="article_images/", blank=True, null=True
     )
     slug = models.SlugField(
         "Путь URL", max_length=80, null=True, unique=True, db_index=True

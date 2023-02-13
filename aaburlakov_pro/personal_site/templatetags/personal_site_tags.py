@@ -26,3 +26,26 @@ def show_categories():
     # Обычно такие служебные html помещают в отдельную папку.
     cats = Category.objects.all()
     return {"cats": cats}
+
+
+@register.inclusion_tag("personal_site/inclusion_tags/article_list.html")
+def article_list(article_type: str):
+    """
+    Tag to show articles list at site separated by types.
+    """
+    articles = Article.objects.filter(
+        archived=False, article_type=article_type
+    ).order_by("-date")
+
+    if article_type == "PR":
+        tags = []
+        section_id = "projects"
+    else:
+        tags = ArticleTags.objects.filter(archived=False)
+        section_id = "blog"
+
+    return {
+        "articles": articles,
+        "tags": tags,
+        "section_id": section_id,
+    }

@@ -87,9 +87,17 @@ def aaburlakov(request):
     View to show full one-page site.
     """
     posts = Article.objects.filter(archived=False, article_type="BL").order_by("-date")
+    projects = Article.objects.filter(archived=False, article_type="PR").order_by(
+        "-date"
+    )
     recent_posts = posts[:5]
     tags = ArticleTags.objects.filter(archived=False)
-    content = {"posts": posts, "recent_posts": recent_posts, "tags": tags}
+    content = {
+        "posts": posts,
+        "projects": projects,
+        "recent_posts": recent_posts,
+        "tags": tags,
+    }
     return render(request, "personal_site/index.html", content)
 
 

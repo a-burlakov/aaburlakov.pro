@@ -1,4 +1,5 @@
 {% extends "personal_site/base.html" %}
+{% load personal_site_tags %}
 
 {% block content %}
 
@@ -6,9 +7,17 @@
     {% include "personal_site/header.html" %}
     {% endblock %}
 
-    {% block blog %}
-    {% include "personal_site/blog.html" %}
-    {% endblock %}
+    {% article_list "PR" %}
+
+    {% article_list "BL" %}
+
+    {% comment %}
+
+        {% block blog %}
+        {% include "personal_site/blog.html" %}
+        {% endblock %}
+
+    {% endcomment %}
 
     {% block contacts %}
     {% include "personal_site/contacts.html" %}
