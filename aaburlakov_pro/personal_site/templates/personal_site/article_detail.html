@@ -7,6 +7,8 @@ body::before {
 	background: #ffffff {% static "personal_site/img/post.jpg" %});
 }
 
+
+
 </style>
 
 <!-- ======= шаблон для поста ======= -->
@@ -15,7 +17,8 @@ body::before {
 
     </form>
     <div class="container">
-        <input onclick="history.back()" type="button" value="Назад...">
+        <input class="btn btn-light" onclick="history.back()" type="button" value="Назад...">
+        </p>
         <div class="row">
             <div class="col-lg-8">
                 <h2 class="portfolio-title">{{ article.title }}</h2>
@@ -32,7 +35,7 @@ body::before {
                     {{ article.text|safe }}
                 </p>
                 </p>
-                 <p class="post-tags">{{ article.tags_line }}</p>
+                <p class="post-tags">{{ article.tags_line }}</p>
             </div>
         </div>
     </div>
