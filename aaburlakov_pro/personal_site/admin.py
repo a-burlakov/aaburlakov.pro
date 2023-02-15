@@ -23,7 +23,6 @@ class ArticleAdmin(admin.ModelAdmin):
         "sub_title",
         "slug",
         "date",
-        "image",
         "archived",
     )
     list_display_links = ("id", "title", "sub_title")

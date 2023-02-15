@@ -180,9 +180,6 @@ class Article(models.Model):
     date = models.DateField("Дата", null=True, blank=True)
     text = models.TextField("Текст")
     tags = models.ManyToManyField("ArticleTags", verbose_name="Тэги", blank=True)
-    image = models.ImageField(
-        "Главное изображение", upload_to="article_images/", blank=True, null=True
-    )
     slug = models.SlugField(
         "Путь URL", max_length=80, null=True, unique=True, db_index=True
     )
@@ -254,11 +251,13 @@ class Article(models.Model):
 
     def image_path(self) -> str:
         """
-        Returns string from "image" field or standard image otherwise.
+        Returns url for default image from "ArticleImages"
+        or standard image if there's no images yet.
         """
 
-        if self.image:
-            image_path = self.image.url
+        default_image = self.images.filter(default=True).first()
+        if default_image:
+            image_path = default_image.image.url
         else:
             image_path = settings.MEDIA_URL + "article_images/blog-no-picture.png"
         return image_path
@@ -272,8 +271,9 @@ class ArticleImages(models.Model):
     article = models.ForeignKey(
         "Article", on_delete=models.CASCADE, related_name="images"
     )
-    image = models.ImageField(upload_to="article_images")
-    default = models.BooleanField("Титульное")
+    image = models.ImageField("Изображение", upload_to="article_images")
+    caption = models.CharField("Подпись", max_length=250, blank=True, null=True)
+    default = models.BooleanField("Титульное изображение")
 
 
 class ArticleTags(models.Model):
