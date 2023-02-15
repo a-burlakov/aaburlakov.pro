@@ -264,6 +264,18 @@ class Article(models.Model):
         return image_path
 
 
+class ArticleImages(models.Model):
+    """
+    Images for Articles.
+    """
+
+    article = models.ForeignKey(
+        "Article", on_delete=models.CASCADE, related_name="images"
+    )
+    image = models.ImageField(upload_to="article_images")
+    default = models.BooleanField("Титульное")
+
+
 class ArticleTags(models.Model):
     """
     Tags for article. Used to filter articles interactively.

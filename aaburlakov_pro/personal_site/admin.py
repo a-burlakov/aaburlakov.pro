@@ -10,6 +10,11 @@ class WomenAdmin(admin.ModelAdmin):
     search_fields = ("title", "content")
 
 
+class ArticleImagesInline(admin.TabularInline):
+    fk_name = "article"
+    model = ArticleImages
+
+
 class ArticleAdmin(admin.ModelAdmin):
     list_display = (
         "id",
@@ -25,12 +30,20 @@ class ArticleAdmin(admin.ModelAdmin):
     search_fields = ("title", "sub_title", "text", "article_type")
     list_editable = ("slug", "archived")
     prepopulated_fields = {"slug": ("title",)}
+    inlines = [
+        ArticleImagesInline,
+    ]
 
 
 class ArticleTagsAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "archived")
     list_display_links = ("id", "name")
     search_fields = "name"
+
+
+class ArticleImagesAdmin(admin.ModelAdmin):
+    list_display = ("id", "image", "article")
+    list_display_links = "id"
 
 
 # Register your models here.
