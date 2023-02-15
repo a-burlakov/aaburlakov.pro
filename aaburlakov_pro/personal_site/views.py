@@ -1,5 +1,5 @@
-from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, HttpResponseNotFound
+from django.shortcuts import render, redirect
 
 # В представление (view) попадает строка запроса вида http://127.0.0.1:8000/women/madonna/
 # Представление по внутренней логике собирает информацию по Model и Templates
@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 
 from personal_site.forms import AddPostForm
-from personal_site.models import Women, Article, ArticleTags, Category
+from personal_site.models import Women, Article, ArticleTags
 
 menu = [
     {"title": "О сайте", "url_name": "about"},
