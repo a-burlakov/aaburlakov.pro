@@ -2,6 +2,7 @@
 # файл __init.py.
 
 from django import template
+
 from personal_site.models import *
 
 # Через Library происходит регистрация шаблонных тэгов.
