@@ -2,7 +2,6 @@
 
 body {
   font-family: "Open Sans", sans-serif;
-  font-family: "Open Sans", sans-serif;
   background-color: #040404;
   color: #3a393d;
   position: relative ;
@@ -41,6 +40,18 @@ body {
     background-attachment: fixed;
     background-repeat: repeat;
 }
+
+#transparent-image-article-detail {
+    transition: opacity 0.5s ease-out;
+    position: fixed;
+    background-size: cover;
+    background-attachment: fixed;
+    display: block;
+    opacity: 0.95;
+    height: 1000%;
+    width: 1000%;
+    background-repeat: repeat;
+    }
 
 
 
@@ -901,8 +912,20 @@ section .container {
 /*--------------------------------------------------------------
 # Portfolio Details
 --------------------------------------------------------------*/
+.portfolio-details:before{
+
+    transition: opacity 0.5s ease-out;
+    position:fixed;
+    content: url("../img/bg-3.jpg");
+    z-index: -5;
+    opacity:0.05;
+    display: inline-block;
+    width: 10px;
+    height: 20px;
+    display: inline;
+}
 .portfolio-details {
-  padding-top: 40px;
+
   background: rgb(203 220 230);
   position: fixed;
   left: 0;
@@ -910,6 +933,7 @@ section .container {
   top: 0;
   bottom: 0;
   overflow-y: auto;
+
 }
 .portfolio-details .container {
   padding-top: 20px;

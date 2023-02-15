@@ -2,21 +2,12 @@
 {% load static %}
 {% load markdownify %}
 {% load i18n %}
+
 {% block content %}
-<style>
-body::before {
-	background: #ffffff {% static "personal_site/img/post.jpg" %});
-}
 
 
-
-</style>
-
-<!-- ======= шаблон для поста ======= -->
 <div class="portfolio-details" id="portfolio-details">
-    <form>
 
-    </form>
     <div class="container">
         <input class="btn btn-light" onclick="history.back()" type="button" value="Назад...">
         </p>
@@ -32,14 +23,13 @@ body::before {
                 {% language 'ru' %}
                 <p class="post-date">{{ article.date|date:"j E Y г." }}</p>
                 {% endlanguage %}
-                <p>                </p>
-                    {{ article.text|safe|markdownify  }}
-
+                </p>
+                    {{ article.text|markdownify|safe }}
                 </p>
                 <p class="post-tags">{{ article.tags_line }}</p>
             </div>
         </div>
     </div>
-</div><!-- конец карточки -->
-<!-- конец поста -->
+</div>
+
 {% endblock %}
