@@ -11,4 +11,4 @@ tag: книги
 
 Хорошая, полезная, умная книга.
 
-![post-image](/static/img/posts/anafems.png)
+![post-image](/media/article_images/blog-no-picture.png)
