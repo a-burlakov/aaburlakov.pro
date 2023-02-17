@@ -1,15 +1,17 @@
+from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 
 # В представление (view) попадает строка запроса вида http://127.0.0.1:8000/women/madonna/
 # Представление по внутренней логике собирает информацию по Model и Templates
 # Модель предоставляет данные, а Шаблон - шаблон HTML, который надо заполнить
 # данными. Это и есть MTV (MVC).
 # Представления в терминологии MVC - это контроллеры.
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 
 from personal_site.forms import AddPostForm
-from personal_site.models import Women, Article, ArticleTags
+from personal_site.models import Women, Article, ArticleTags, Category
 
 menu = [
     {"title": "О сайте", "url_name": "about"},
@@ -112,6 +114,28 @@ class ArticleDetail(DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+
+class DataMixin:
+    def get_user_context(self, **kwargs):
+        context = kwargs
+        cats = Category.objects.all()
+        context["menu"] = menu
+        context["cats"] = cats
+        if "cat_selected" not in context:
+            context["cat_selected"] = 0
+        return context
+
+
+class RegisterUser(DataMixin, CreateView):
+    form_class = UserCreationForm
+    template_name = "women/register.html"
+    success_url = reverse_lazy("login")
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Регистрация")
+        return dict(list(context.items()) + list(c_def.items()))
 
 
 def about(request):

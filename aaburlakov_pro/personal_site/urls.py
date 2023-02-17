@@ -13,6 +13,7 @@ urlpatterns = [
     path("addpage/", addpage, name="add_page"),
     path("contact/", contact, name="contact"),
     path("login/", login, name="login"),
+    path("register/", RegisterUser.as_view(), name="register"),
     path("post_women/<int:post_id>/", show_post, name="post_women"),
     path("category/<slug:cat_slug>/", WomenCategory.as_view(), name="category"),
 ]
