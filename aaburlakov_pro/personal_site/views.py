@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
+from django.db.models import Prefetch
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -11,7 +12,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 
 from personal_site.forms import AddPostForm
-from personal_site.models import Women, Article, ArticleTags, Category
+from personal_site.models import Women, Article, ArticleTags, Category, ArticleImages
 
 menu = [
     {"title": "О сайте", "url_name": "about"},
@@ -88,15 +89,11 @@ def aaburlakov(request):
     """
     View to show full one-page site.
     """
-    posts = Article.objects.filter(archived=False, article_type="BL").order_by("-date")
-    projects = Article.objects.filter(archived=False, article_type="PR").order_by(
+    recent_posts = Article.objects.filter(archived=False, article_type="BL").order_by(
         "-date"
-    )
-    recent_posts = posts[:5]
+    )[:5]
     tags = ArticleTags.objects.filter(archived=False)
     content = {
-        "posts": posts,
-        "projects": projects,
         "recent_posts": recent_posts,
         "tags": tags,
     }

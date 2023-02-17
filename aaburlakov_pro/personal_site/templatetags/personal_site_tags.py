@@ -2,6 +2,7 @@
 # файл __init.py.
 
 from django import template
+from django.db.models import Prefetch
 
 from personal_site.models import *
 
@@ -34,9 +35,16 @@ def article_list(article_type: str):
     """
     Tag to show articles list at site separated by types.
     """
-    articles = Article.objects.filter(
-        archived=False, article_type=article_type
-    ).order_by("-date")
+    articles = (
+        Article.objects.filter(archived=False, article_type=article_type)
+        .prefetch_related(
+            Prefetch("images", queryset=ArticleImages.objects.filter(default=True))
+        )
+        .prefetch_related(
+            Prefetch("tags", queryset=ArticleTags.objects.filter(archived=False))
+        )
+        .order_by("-date")
+    )
 
     if article_type == "PR":
         tags = []

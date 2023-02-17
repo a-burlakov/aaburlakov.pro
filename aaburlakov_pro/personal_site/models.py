@@ -179,7 +179,9 @@ class Article(models.Model):
     sub_title = models.CharField("Подзаголовок", max_length=250, blank=True)
     date = models.DateField("Дата", null=True, blank=True)
     text = models.TextField("Текст")
-    tags = models.ManyToManyField("ArticleTags", verbose_name="Тэги", blank=True)
+    tags = models.ManyToManyField(
+        "ArticleTags", verbose_name="Тэги", blank=True, related_name="tags"
+    )
     slug = models.SlugField(
         "Путь URL", max_length=80, null=True, unique=True, db_index=True
     )
@@ -218,8 +220,9 @@ class Article(models.Model):
         Returns line of tags with "#" separated by spaces. This line is need
         for showing at web-site.
         """
-        tags = list(self.tags.all())
-        return " ".join([f"#{x.name}" for x in tags])
+
+        tags = ["#" + tag.name for tag in self.tags.all()]
+        return " ".join(tags)
 
     def tags_line_for_html(self) -> str:
         """
@@ -228,6 +231,7 @@ class Article(models.Model):
         """
         tags = list(self.tags.all())
         return " ".join([x.name for x in tags])
+        return ""
 
     def time_to_read(self) -> str:
         """
@@ -249,15 +253,16 @@ class Article(models.Model):
 
         return time_to_read
 
-    def image_path(self) -> str:
+    def default_image_path(self) -> str:
         """
         Returns url for default image from "ArticleImages"
         or standard image if there's no images yet.
         """
 
-        default_image = self.images.filter(default=True).first()
-        if default_image:
-            image_path = default_image.image.url
+        # default_image = self.images.filter(default=True).first()
+        default_images = self.images.all()
+        if default_images:
+            image_path = default_images[0].image.url
         else:
             image_path = settings.MEDIA_URL + "article_images/blog-no-picture.png"
         return image_path
