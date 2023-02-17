@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "personal_site.apps.PersonalSiteConfig",  # Здесь мы не просто обращаемся к приложению personal_site, а к конкретному его классу из файла apps.py. Это упрощает разработку.
     "markdownify.apps.MarkdownifyConfig",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -59,6 +60,11 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+]
+
+INTERNAL_IPS = [
+    "127.0.0.1",
 ]
 
 ROOT_URLCONF = "aaburlakov_pro.urls"

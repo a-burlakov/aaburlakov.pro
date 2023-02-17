@@ -56,8 +56,13 @@ urlpatterns = [
 # для получения ранее загруженных файлов нашему приложению. Для этого пишем
 # такую строчку.
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    import debug_toolbar
 
+    urlpatterns = [
+        path("__debug__/", include(debug_toolbar.urls)),
+    ] + urlpatterns
+
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # В этом модуле можно прописывать переменные handlerXXX для обработки кодов
 # ошибок. Этим переменным назначаются классы view, которые необходмо вызывать
 # в таких случаях.
