@@ -46,6 +46,11 @@ def article_list(article_type: str):
         .order_by("-date")
     )
 
+    for article in articles:
+        article.tags_line = article.tags_line()
+        article.tags_line_for_html = article.tags_line_for_html()
+        article.default_image_path = article.default_image_path()
+
     if article_type == "PR":
         tags = []
         section_id = "projects"
