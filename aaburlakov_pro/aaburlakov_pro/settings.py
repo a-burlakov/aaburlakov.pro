@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "personal_site.apps.PersonalSiteConfig",  # Здесь мы не просто обращаемся к приложению personal_site, а к конкретному его классу из файла apps.py. Это упрощает разработку.
     "markdownify.apps.MarkdownifyConfig",
     "debug_toolbar",
+    "silk",
 ]
 
 MIDDLEWARE = [
@@ -61,6 +62,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "silk.middleware.SilkyMiddleware",
 ]
 
 INTERNAL_IPS = [

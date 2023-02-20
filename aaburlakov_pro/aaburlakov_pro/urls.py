@@ -50,6 +50,7 @@ urlpatterns = [
     # него ссылаться. Например, извне можно написать 'return redirect("home")',
     # и Django поймет, что нужно перенаправить на этот путь
     # path("", index, name="home"),
+    path("silk/", include("silk.urls", namespace="silk")),
 ]
 
 # На отладочном веб-сервере необходимо сэмулировать работу настоящего сервера

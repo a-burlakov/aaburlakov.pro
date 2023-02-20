@@ -2,7 +2,6 @@
 
 body {
   font-family: "Open Sans", sans-serif;
-  font-family: "Open Sans", sans-serif;
   background-color: #040404;
   color: #3a393d;
   position: relative ;
@@ -41,6 +40,18 @@ body {
     background-attachment: fixed;
     background-repeat: repeat;
 }
+
+#transparent-image-article-detail {
+    transition: opacity 0.5s ease-out;
+    position: fixed;
+    background-size: cover;
+    background-attachment: fixed;
+    display: block;
+    opacity: 0.95;
+    height: 1000%;
+    width: 1000%;
+    background-repeat: repeat;
+    }
 
 
 
@@ -171,7 +182,7 @@ h1, h2, h3, h4, h5, h6 {
      font-size: 14px;
 }
 
-#header .posts-list .post-date {
+#header .posts-list .post-date{
     color: rgb(58 57 61);
     font-style: noitalic;
     font-size: 12px;
@@ -193,6 +204,7 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 50%;
   width: 38px;
   height: 38px;
+  transition: ease-in-out 0.3s;
 }
 #header .social-links a:hover {
   background: rgba(78, 142, 219, 1);
@@ -900,8 +912,20 @@ section .container {
 /*--------------------------------------------------------------
 # Portfolio Details
 --------------------------------------------------------------*/
+.portfolio-details:before{
+
+    transition: opacity 0.5s ease-out;
+    position:fixed;
+    content: url("../img/bg-3.jpg");
+    z-index: -5;
+    opacity:0.05;
+    display: inline-block;
+    width: 10px;
+    height: 20px;
+    display: inline;
+}
 .portfolio-details {
-  padding-top: 40px;
+
   background: rgb(203 220 230);
   position: fixed;
   left: 0;
@@ -909,6 +933,7 @@ section .container {
   top: 0;
   bottom: 0;
   overflow-y: auto;
+
 }
 .portfolio-details .container {
   padding-top: 20px;
@@ -928,6 +953,12 @@ section .container {
   margin-bottom: 5px;
 }
 .portfolio-details .portfolio-info .post-date {
+  font-size: 14px;
+  margin-bottom: 5px;
+  margin-top: 0px;
+  padding: 0px;
+}
+.portfolio-details .portfolio-info .post-tags {
   font-size: 14px;
   margin-bottom: 5px;
   margin-top: 0px;
@@ -964,11 +995,12 @@ section .container {
   background-color: rgba(78, 142, 219, 1);
 }
 
-.blog-post-date {
+.blog-post-date, .blog-post-tags   {
     color: rgb(58 57 61);
     font-size: 14px;
     padding-top: 8px;
 }
+
 
 .blog-image {
     max-width: 100%;
@@ -986,7 +1018,7 @@ section .container {
     margin-bottom: 20px;
     object-fit: cover;
     border: 1px solid #70757b;
-    opacity: 0.9;
+    opacity: 1;
 }
 
 [alt="post-image"] {
