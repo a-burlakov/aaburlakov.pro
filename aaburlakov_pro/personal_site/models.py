@@ -275,24 +275,27 @@ class Article(models.Model):
         Additionally, transforms lines like "$image_N" to HTML image using
         paths from "ArticleImages" model.
         """
-        html_text = markdown(self.text)
 
-        image_template = string.Template('<img class="post-image" src="$url">')
-        caption_template = string.Template('<p class="post-image-caption">$caption</p>')
+        md_text = self.text
+
+        image_template = string.Template("![post-image]($url)")
+        caption_template = string.Template(
+            '<center class="post-image-caption">$caption</center>'
+        )
 
         images = self.images.all()
         for i, image in enumerate(images, 1):
             image_line = f"$image_{i}"
-            if image_line not in html_text:
+            if image_line not in md_text:
                 continue
 
-            html_image = image_template.substitute(url=image.image.url)
+            md_image = image_template.substitute(url=image.image.url)
             if image.caption:
-                html_image += caption_template.substitute(caption=image.caption)
+                md_image += caption_template.substitute(caption=image.caption)
 
-            html_text = html_text.replace(image_line, html_image)
+            md_text = md_text.replace(image_line, md_image)
 
-        return html_text
+        return markdown(md_text)
 
 
 class ArticleImages(models.Model):

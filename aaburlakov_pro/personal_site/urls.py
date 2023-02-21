@@ -8,7 +8,8 @@ urlpatterns = [
     path("aaburlakov/", cache_page(60 * 15)(aaburlakov), name="aaburlakov"),
     path(
         "aaburlakov/blog/<slug:slug>/",
-        cache_page(60 * 15)(ArticleDetail.as_view()),
+        # cache_page(60 * 15)(ArticleDetail.as_view()),
+        (ArticleDetail.as_view()),
         name="article_detail",
     ),
     path("about/", about, name="about"),

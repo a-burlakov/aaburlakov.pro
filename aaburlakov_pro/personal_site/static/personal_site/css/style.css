@@ -1021,7 +1021,7 @@ section .container {
     opacity: 1;
 }
 
-.post-image {
+.post-image, [alt="post-image"] {
     display: block;
     margin: auto;
     max-height: 700px;
@@ -1032,7 +1032,7 @@ section .container {
  }
 
 .post-image-caption {
-    font-size: 18px;
+    font-size: 15px;
     text-align: center;
  }
 
