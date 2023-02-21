@@ -1,6 +1,5 @@
 {% extends "personal_site/base.html" %}
 {% load static %}
-{% load markdownify %}
 {% load i18n %}
 
 {% block content %}
@@ -24,7 +23,7 @@
                 <p class="post-date">{{ article.date|date:"j E Y г." }}</p>
                 {% endlanguage %}
                 </p>
-                    {{ article.text|markdownify|safe }}
+                    {{ article.text_as_html|safe }}
                 </p>
                 <p class="post-tags">{{ article.tags_line }}</p>
             </div>

@@ -1,9 +1,12 @@
+import string
+
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _  # from documentation
+from markdown import markdown
 
-#
+
 from aaburlakov_pro import settings
 
 
@@ -231,7 +234,6 @@ class Article(models.Model):
         """
         tags = list(self.tags.all())
         return " ".join([x.name for x in tags])
-        return ""
 
     def time_to_read(self) -> str:
         """
@@ -266,6 +268,30 @@ class Article(models.Model):
         else:
             image_path = settings.MEDIA_URL + "article_images/blog-no-picture.png"
         return image_path
+
+    def text_as_html(self) -> str:
+        """
+        Returns raw HTML  from markdown text in model.
+        Additionally transforms lines like "$image_N" to HTML image using
+        paths from "ArticleImages" model.
+        """
+        html_text = markdown(self.text)
+
+        image_html_template = string.Template(
+            '<img alt="post-image" src="$url">'
+            '<p alt="post-image-caption">$caption</p>'
+        )
+
+        images = self.images.all()
+        for i, image in enumerate(images, 1):
+            image_line = f"$image_{i}"
+            if image_line in html_text:
+                html_image = image_html_template.substitute(
+                    url=image.image.url, caption=image.caption
+                )
+                html_text = html_text.replace(image_line, html_image)
+
+        return html_text
 
 
 class ArticleImages(models.Model):
