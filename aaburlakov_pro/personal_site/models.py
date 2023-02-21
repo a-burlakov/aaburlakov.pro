@@ -277,8 +277,8 @@ class Article(models.Model):
         """
         html_text = markdown(self.text)
 
-        image_template = string.Template('<img alt="post-image" src="$url">')
-        caption_template = string.Template('<p alt="post-image-caption">$caption</p>')
+        image_template = string.Template('<img class="post-image" src="$url">')
+        caption_template = string.Template('<p class="post-image-caption">$caption</p>')
 
         images = self.images.all()
         for i, image in enumerate(images, 1):

@@ -5,10 +5,10 @@ from .views import *
 
 urlpatterns = [
     path("", WomenHome.as_view(), name="home"),
-    path("aaburlakov/", cache_page(60)(aaburlakov), name="aaburlakov"),
+    path("aaburlakov/", cache_page(60 * 15)(aaburlakov), name="aaburlakov"),
     path(
         "aaburlakov/blog/<slug:slug>/",
-        ArticleDetail.as_view(),
+        cache_page(60 * 15)(ArticleDetail.as_view()),
         name="article_detail",
     ),
     path("about/", about, name="about"),
