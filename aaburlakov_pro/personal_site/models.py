@@ -271,25 +271,26 @@ class Article(models.Model):
 
     def text_as_html(self) -> str:
         """
-        Returns raw HTML  from markdown text in model.
-        Additionally transforms lines like "$image_N" to HTML image using
+        Returns raw HTML from Markdown text in model.
+        Additionally, transforms lines like "$image_N" to HTML image using
         paths from "ArticleImages" model.
         """
         html_text = markdown(self.text)
 
-        image_html_template = string.Template(
-            '<img alt="post-image" src="$url">'
-            '<p alt="post-image-caption">$caption</p>'
-        )
+        image_template = string.Template('<img alt="post-image" src="$url">')
+        caption_template = string.Template('<p alt="post-image-caption">$caption</p>')
 
         images = self.images.all()
         for i, image in enumerate(images, 1):
             image_line = f"$image_{i}"
-            if image_line in html_text:
-                html_image = image_html_template.substitute(
-                    url=image.image.url, caption=image.caption
-                )
-                html_text = html_text.replace(image_line, html_image)
+            if image_line not in html_text:
+                continue
+
+            html_image = image_template.substitute(url=image.image.url)
+            if image.caption:
+                html_image += caption_template.substitute(caption=image.caption)
+
+            html_text = html_text.replace(image_line, html_image)
 
         return html_text
 
