@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 # данными. Это и есть MTV (MVC).
 # Представления в терминологии MVC - это контроллеры.
 from django.views.generic import ListView, DetailView, CreateView
+from silk.profiling.profiler import silk_profile
 
 from personal_site.forms import AddPostForm
 from personal_site.models import Women, Article, ArticleTags, Category, ArticleImages
@@ -89,9 +90,11 @@ def aaburlakov(request):
     """
     View to show full one-page site.
     """
-    recent_posts = Article.objects.filter(archived=False, article_type="BL").order_by(
-        "-date"
-    )[:5]
+    recent_posts = (
+        Article.objects.filter(archived=False, article_type="BL")
+        .order_by("-date")
+        .only()[:5]
+    )
     tags = ArticleTags.objects.filter(archived=False)
     content = {
         "recent_posts": recent_posts,
