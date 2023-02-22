@@ -3,65 +3,65 @@
 
 {% block header %}
 
-  <!--Предзагрузка картинок, которые будут меняться анимацией,
-  чтобы не мигали при первом появлении во время смены друг друга.-->
-  <div style="position:fixed;left:9999px;opacity:0;">
-      <img src="{% static 'personal_site/img/transparent.jpg' %}">
-      <img src="{% static 'personal_site/img/bg-1.jpg' %}">
-      <img src="{% static 'personal_site/img/bg-2.jpg' %}">
-      <img src="{% static 'personal_site/img/bg-3.jpg' %}">
-  </div>
+    <!--Предзагрузка картинок, которые будут меняться анимацией,
+    чтобы не мигали при первом появлении во время смены друг друга.-->
+    <div style="position:fixed;left:9999px;opacity:0;">
+        <img src="{% static 'personal_site/img/transparent.jpg' %}">
+        <img src="{% static 'personal_site/img/bg-1.jpg' %}">
+        <img src="{% static 'personal_site/img/bg-2.jpg' %}">
+        <img src="{% static 'personal_site/img/bg-3.jpg' %}">
+    </div>
 
-  <!-- Image to make background semi-transparent for some pages.    -->
+    <!-- Image to make background semi-transparent for some pages.    -->
     <img id="transparent-image" src="{% static 'personal_site/img/transparent.jpg' %}">
 
-  <!-- Хедер -->
-  <header id="header">
-    <div class="container">
-      <h1><a class="main-title" href="#header">Алексей Бурлаков</a></h1>
-      <h2><span>Python</span>-разработчик</h2>
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a class="nav-link" href="#projects">Портфолио</a></li>
-          <li><a class="nav-link" href="#blog">Блог</a></li>
-          <li><a class="nav-link" href="#contact">Контакты</a></li>
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- Навигация -->
+    <!-- Хедер -->
+    <header id="header">
+        <div class="container">
+            <h1><a class="main-title" href="#header">Алексей Бурлаков</a></h1>
+            <h2><span>Python</span>-разработчик</h2>
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link" href="#projects">Портфолио</a></li>
+                    <li><a class="nav-link" href="#blog">Блог</a></li>
+                    <li><a class="nav-link" href="#contact">Контакты</a></li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- Навигация -->
 
-      <div class="recent-posts">
-        <div class="block-title">
-            <p>Недавно в моём блоге:</p>
+            <div class="recent-posts">
+                <div class="block-title">
+                    <p>Недавно в моём блоге:</p>
+                </div>
+
+                <div class="block-content">
+                    <ul class="posts-list">
+                        {% for post in recent_posts %}
+                            <li>
+                                <a href="{{ post.get_absolute_url }}">
+                                    <div class="post-title">{{ post.title }}</div>
+                                    {% language 'ru' %}
+                                        <div class="post-date">{{ post.date|date:"j E, Y" }}
+                                            • {{ post.time_to_read }} </div>
+                                    {% endlanguage %}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="{{ email }}" target="_blank" class="email"><i class="fa-solid fa-envelope"></i></a>
+                <a href="{{ telegram }}" target="_blank" class="telegram"><i class="fa fa-telegram"></i></a>
+                <a href="{{ vk }}" target="_blank" class="vk"><i class="fa fa-vk"></i></a>
+                <a href="{{ github }}" target="_blank" class="github"><i class="fa fa-github"></i></a>
+                <a href="{{ linkedin }}" target="_blank" class="github"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
+
+
         </div>
 
-        <div class="block-content">
-            <ul class="posts-list">
-            {% for post in recent_posts %}
-            <li>
-              <a href="{{ post.get_absolute_url }}">
-                <div class="post-title">{{ post.title }}</div>
-                {% language 'ru' %}
-                <div class="post-date">{{ post.date|date:"j E, Y" }} • {{ post.time_to_read }} </div>
-                {% endlanguage %}
-              </a>
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
-        </div>
-
-      <div class="social-links">
-          <a href="{{ email }}" target="_blank" class="email"><i class="fa-solid fa-envelope"></i></a>
-          <a href="{{ telegram }}" target="_blank" class="telegram"><i class="fa fa-telegram"></i></a>
-          <a href="{{ vk }}" target="_blank" class="vk"><i class="fa fa-vk"></i></a>
-          <a href="{{ github }}" target="_blank" class="github"><i class="fa fa-github"></i></a>
-          <a href="{{ linkedin }}" target="_blank" class="github"><i class="fa-brands fa-linkedin"></i></a>
-      </div>
-
-
-
-      </div>
-
-  </header>
+    </header>
 
 {% endblock %}

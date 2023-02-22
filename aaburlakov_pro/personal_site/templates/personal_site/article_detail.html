@@ -5,30 +5,31 @@
 {% block content %}
 
 
-<div class="portfolio-details" id="portfolio-details">
+    <div class="portfolio-details" id="portfolio-details">
 
-    <div class="container">
-        <input class="btn btn-light" onclick="history.back()" type="button" value="Назад...">
-        </p>
-        <div class="row">
-            <div class="col-lg-8">
-                <h2 class="portfolio-title">{{ article.title }}</h2>
-            </div>
-            <div class="col-lg-8 portfolio-info">
-                {% if article.sub_title|length > 1 %}
-                <h3>{{ article.sub_title }}</h3>
-                {% endif %}
+        <div class="container">
+            <input class="btn btn-light" onclick="history.back()" type="button"
+                   value="Назад...">
+            </p>
+            <div class="row">
+                <div class="col-lg-8">
+                    <h2 class="portfolio-title">{{ article.title }}</h2>
+                </div>
+                <div class="col-lg-8 portfolio-info">
+                    {% if article.sub_title|length > 1 %}
+                        <h3>{{ article.sub_title }}</h3>
+                    {% endif %}
 
-                {% language 'ru' %}
-                <p class="post-date">{{ article.date|date:"j E Y г." }}</p>
-                {% endlanguage %}
-                </p>
+                    {% language 'ru' %}
+                        <p class="post-date">{{ article.date|date:"j E Y г." }}</p>
+                    {% endlanguage %}
+                    </p>
                     {{ article.text_as_html|safe }}
-                </p>
-                <p class="post-tags">{{ article.tags_line }}</p>
+                    </p>
+                    <p class="post-tags">{{ article.tags_line }}</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 {% endblock %}
