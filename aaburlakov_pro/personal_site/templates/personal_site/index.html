@@ -11,24 +11,27 @@
 
     {% article_list "PR" %}
 
+    {% block resume %}
+        {% include "personal_site/resume.html" %}
+    {% endblock %}
+
+    {% block about_me %}
+        {% include "personal_site/about_me.html" %}
+    {% endblock %}
+
     {% comment %}
 
         {% block blog %}
         {% include "personal_site/inclusion_tags/article_list.html" %}
         {% endblock %}
 
-
     {% endcomment %}
 
-    {% block contacts %}
-        {% include "personal_site/contacts.html" %}
-    {% endblock %}
+    {#    {% block contacts %}#}
+    {#        {% include "personal_site/contacts.html" %}#}
+    {#    {% endblock %}#}
 
     {% comment %}
-
-    {% block resume %}
-    {% include "resume.html" %}
-    {% endblock %}
 
     {% block counters %}
     {% include "counters.html" %}

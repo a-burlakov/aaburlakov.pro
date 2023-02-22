@@ -22,9 +22,14 @@
                     {% for article in articles %}
                         <div class="col-lg-4 col-md-6 portfolio-item {{ article.tags_line_for_html }}">
                             <div class="portfolio-wrap">
-                                <img src="{% static 'personal_site/img/post-background.png' %}" width="100%" height="100%" class="img-fluid" alt="">
+                                <img src="{% static 'personal_site/img/post-background.png' %}"
+                                     width="100%" height="100%" class="img-fluid"
+                                     alt="">
                                 <div class="portfolio-info">
-                                    <a class="blog-image-link" href="{{ article.get_absolute_url }}"><img src="{{ article.default_image_path }}" class="blog-image" alt=""></a>
+                                    <a class="blog-image-link"
+                                       href="{{ article.get_absolute_url }}"><img
+                                            src="{{ article.default_image_path }}"
+                                            class="blog-image" alt=""></a>
                                     <h4>
                                         <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
                                     </h4>
