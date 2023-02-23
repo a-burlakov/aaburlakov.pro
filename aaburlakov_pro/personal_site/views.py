@@ -114,7 +114,7 @@ def aaburlakov(request):
     recent_posts = (
         Article.objects.filter(archived=False, article_type="BL")
         .order_by("-date")
-        .only()[:5]
+        .only("title", "date", "slug", "text")[:5]
     )
     tags = ArticleTags.objects.filter(archived=False)
     content = {
