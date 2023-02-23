@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Prefetch
+from django.forms import model_to_dict
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -11,6 +12,8 @@ from rest_framework import generics
 # данными. Это и есть MTV (MVC).
 # Представления в терминологии MVC - это контроллеры.
 from django.views.generic import ListView, DetailView, CreateView
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from silk.profiling.profiler import silk_profile
 
 from personal_site.forms import AddPostForm
@@ -18,9 +21,24 @@ from personal_site.models import Women, Article, ArticleTags, Category, ArticleI
 from personal_site.serializers import WomenSerializer, ArticleSerializer
 
 
-class WomenAPIView(generics.ListAPIView):
-    queryset = Women.objects.all()
-    serializer_class = WomenSerializer
+class WomenAPIView(APIView):
+    def get(self, request):
+        posts = Women.objects.all().values()
+        return Response({"posts": posts})
+
+    def post(self, request):
+        post_new = Women.objects.create(
+            title=request.data["title"],
+            content=request.data["content"],
+            cat_id=request.data["cat_id"],
+        )
+
+        return Response({"post": model_to_dict(post_new)})
+
+
+# class WomenAPIView(generics.ListAPIView):
+#     queryset = Women.objects.all()
+#     serializer_class = WomenSerializer
 
 
 class ArticleAPIView(generics.ListAPIView):
