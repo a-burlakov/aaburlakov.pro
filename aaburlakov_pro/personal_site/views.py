@@ -3,6 +3,7 @@ from django.db.models import Prefetch
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from rest_framework import generics
 
 # В представление (view) попадает строка запроса вида http://127.0.0.1:8000/women/madonna/
 # Представление по внутренней логике собирает информацию по Model и Templates
@@ -14,6 +15,18 @@ from silk.profiling.profiler import silk_profile
 
 from personal_site.forms import AddPostForm
 from personal_site.models import Women, Article, ArticleTags, Category, ArticleImages
+from personal_site.serializers import WomenSerializer, ArticleSerializer
+
+
+class WomenAPIView(generics.ListAPIView):
+    queryset = Women.objects.all()
+    serializer_class = WomenSerializer
+
+
+class ArticleAPIView(generics.ListAPIView):
+    queryset = Article.objects.filter(archived=False)
+    serializer_class = ArticleSerializer
+
 
 menu = [
     {"title": "О сайте", "url_name": "about"},

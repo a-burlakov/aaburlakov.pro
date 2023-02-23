@@ -18,7 +18,13 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 
 from aaburlakov_pro import settings
-from personal_site.views import categories, archive, pageNotFound
+from personal_site.views import (
+    categories,
+    archive,
+    pageNotFound,
+    WomenAPIView,
+    ArticleAPIView,
+)
 
 # В этом файле мы связываем url, которые ввел пользователь, с views из наших
 # приложений.
@@ -51,6 +57,8 @@ urlpatterns = [
     # и Django поймет, что нужно перенаправить на этот путь
     # path("", index, name="home"),
     path("silk/", include("silk.urls", namespace="silk")),
+    path("api/v1/womenlist", WomenAPIView.as_view()),
+    path("api/v1/articlelist", ArticleAPIView.as_view()),
 ]
 
 # На отладочном веб-сервере необходимо сэмулировать работу настоящего сервера
