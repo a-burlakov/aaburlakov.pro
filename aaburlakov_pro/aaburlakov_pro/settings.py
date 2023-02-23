@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "personal_site.apps.PersonalSiteConfig",  # Здесь мы не просто обращаемся к приложению personal_site, а к конкретному его классу из файла apps.py. Это упрощает разработку.
+    "rest_framework",
     "debug_toolbar",
     "silk",
 ]
