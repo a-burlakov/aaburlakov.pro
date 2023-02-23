@@ -193,7 +193,6 @@ class Article(models.Model):
     archived = models.BooleanField("Архив")
 
     class Meta:
-        ordering = ["-date"]
         verbose_name = "Пост"
         verbose_name_plural = "Посты"
 
