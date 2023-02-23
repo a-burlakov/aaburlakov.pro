@@ -28,6 +28,14 @@ class ArticleAPIView(generics.ListAPIView):
     serializer_class = ArticleSerializer
 
 
+class RecentArticlesAPIView(generics.ListAPIView):
+    queryset = Article.objects.filter(archived=False, article_type="BL").order_by(
+        "-date"
+    )
+
+    serializer_class = ArticleSerializer
+
+
 menu = [
     {"title": "О сайте", "url_name": "about"},
     {"title": "Добавить статью", "url_name": "add_page"},

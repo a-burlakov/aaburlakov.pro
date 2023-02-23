@@ -24,6 +24,7 @@ from personal_site.views import (
     pageNotFound,
     WomenAPIView,
     ArticleAPIView,
+    RecentArticlesAPIView,
 )
 
 # В этом файле мы связываем url, которые ввел пользователь, с views из наших
@@ -58,7 +59,7 @@ urlpatterns = [
     # path("", index, name="home"),
     path("silk/", include("silk.urls", namespace="silk")),
     path("api/v1/womenlist", WomenAPIView.as_view()),
-    path("api/v1/articlelist", ArticleAPIView.as_view()),
+    path("api/v1/recentarticles", RecentArticlesAPIView.as_view()),
 ]
 
 # На отладочном веб-сервере необходимо сэмулировать работу настоящего сервера

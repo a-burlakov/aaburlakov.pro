@@ -12,4 +12,4 @@ class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         # fields = "__all__" # Нельзя использоваться __all__ вместе с exclude и подобным
-        exclude = ("text",)
+        fields = ("title", "date", "get_absolute_url")
