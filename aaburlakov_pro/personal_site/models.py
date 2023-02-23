@@ -205,15 +205,18 @@ class Article(models.Model):
             self.date = timezone.now()
         super(Article, self).save()
 
+    @property
     def get_absolute_url(self) -> str:
         """
         Returns absolute URL for an article.
         """
         return reverse("article_detail", kwargs={"slug": self.slug})
 
+    @property
     def is_blog_post(self) -> bool:
         return self.article_type == ArticleTypes.BLOG
 
+    @property
     def is_project_post(self) -> bool:
         return self.article_type == ArticleTypes.PROJECT
 
