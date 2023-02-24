@@ -167,20 +167,21 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATICFILES_DIRS = []
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# MEDIA_ROOT обозначает, в кокой папке будут храниться файлы, которые загрузил
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.1/howto/static-files/
+# Статические файлы - это файлы, которые идут вместе с проектом.
+STATICFILES_DIRS = []
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+# MEDIA_ROOT обозначает, в какой папке будут храниться файлы, которые загрузил
 # пользователь.
+# Медиа файлы - это файлы, котоыре появляются в ходе работы с проектом. Например,
+# аватарки пользователей, или фотографии их, или даже кэш.
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # MEDIA_URL добавляет к URL файлов префикс, который указан в переменной.
