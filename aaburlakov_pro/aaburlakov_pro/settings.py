@@ -10,6 +10,31 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+# Best practice to make project structure.
+# .
+# ├── apps
+# │   └── app_1
+# │       ├── admin.py
+# │       ├── apps.py
+# │       ├── __init__.py
+# │       ├── migrations
+# │       │   └── __init__.py
+# │       ├── models.py
+# │       ├── tests.py
+# │       └── views.py
+# ├── django_project
+# │   ├── __init__.py
+# │   ├── __pycache__
+# │   │   ├── __init__.cpython-35.pyc
+# │   │   └── settings.cpython-35.pyc
+# │   ├── settings.py
+# │   ├── urls.py
+# │   └── wsgi.py
+# ├── manage.py
+# ├── media
+# ├── static
+# └── templates
+
 # Основная логика работы Django может быть описана так:
 # - клиент делает запрос к нам на сервер
 # - запрос попадает на Web-сервер (Apache, Nginx...)
