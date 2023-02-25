@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 # Best practice to make project structure.
+# https://studygyaan.com/wp-content/uploads/2019/07/Best-Practice-to-Structure-Django-Project-Directories-and-Files.png?ezimgfmt=ngcb1/notWebP
 # .
 # ├── apps
 # │   └── app_1

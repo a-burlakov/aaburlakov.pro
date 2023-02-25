@@ -23,17 +23,24 @@ from personal_site.serializers import WomenSerializer, ArticleSerializer
 
 class WomenAPIView(APIView):
     def get(self, request):
-        posts = Women.objects.all().values()
-        return Response({"posts": posts})
+        w = Women.objects.all().values()
+        # параметр "many" говорит о том, что сериализатору нужно
+        # выдавать не одну запись, а много
+        return Response(
+            {"posts": WomenSerializer(w, many=True).data},
+        )
 
     def post(self, request):
+        serializer = WomenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
         post_new = Women.objects.create(
             title=request.data["title"],
             content=request.data["content"],
             cat_id=request.data["cat_id"],
         )
 
-        return Response({"post": model_to_dict(post_new)})
+        return Response({"post": WomenSerializer(post_new).data})
 
 
 # class WomenAPIView(generics.ListAPIView):
