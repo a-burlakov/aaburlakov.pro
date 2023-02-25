@@ -33,14 +33,44 @@ class WomenAPIView(APIView):
     def post(self, request):
         serializer = WomenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        serializer.save()
 
-        post_new = Women.objects.create(
-            title=request.data["title"],
-            content=request.data["content"],
-            cat_id=request.data["cat_id"],
-        )
+        return Response({"post": serializer.data})
 
-        return Response({"post": WomenSerializer(post_new).data})
+    # Метод PUT служит для изменения или вставки ресурса. В требовании изменения
+    # должен быть задан уникальный ID указанного ресурса.
+    def put(self, request, *args, **kwargs):
+        # в PUT мы изменяем объет. Предполагается, что pk мы передаем.
+        # здесь ищем этот pk
+        pk = kwargs.get("pk", None)
+        if not pk:
+            return Response({"error": "Method PUT not allowed"})
+
+        # по PK ищем наш объект.
+        try:
+            instance = Women.objects.get(pk=pk)
+        except:
+            return Response({"error": "Object does not exist"})
+
+        # когда нашли, по помещаем в сериализатор данные из запроса,
+        # проверяем и передаем, что все ок.
+        serializer = WomenSerializer(data=request.data, instance=instance)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"post": serializer.data})
+
+    def delete(self, request, *args, **kwargs):
+        pk = kwargs.get("pk", None)
+        if not pk:
+            return Response({"error": "Method DELETE not allowed"})
+
+        try:
+            instance = Women.objects.get(pk=pk)
+            instance.delete()
+        except:
+            return Response({"error": "Object could not be deleted"})
+
+        return Response({"post": "delete post " + str(pk)})
 
 
 # class WomenAPIView(generics.ListAPIView):

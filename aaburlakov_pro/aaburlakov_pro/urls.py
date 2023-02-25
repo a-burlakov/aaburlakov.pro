@@ -58,8 +58,9 @@ urlpatterns = [
     # и Django поймет, что нужно перенаправить на этот путь
     # path("", index, name="home"),
     path("silk/", include("silk.urls", namespace="silk")),
-    path("api/v1/womenlist", WomenAPIView.as_view()),
-    path("api/v1/recentarticles", RecentArticlesAPIView.as_view()),
+    path("api/v1/womenlist/", WomenAPIView.as_view()),
+    path("api/v1/womenlist/<int:pk>/", WomenAPIView.as_view()),
+    path("api/v1/recentarticles/", RecentArticlesAPIView.as_view()),
 ]
 
 # На отладочном веб-сервере необходимо сэмулировать работу настоящего сервера
