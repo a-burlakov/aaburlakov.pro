@@ -93,6 +93,13 @@ MIDDLEWARE = [
     # "silk.middleware.SilkyMiddleware",
 ]
 
+REST_FRAMEWORK = {
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ]
+}
+
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
