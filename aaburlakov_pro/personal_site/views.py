@@ -4,6 +4,7 @@ from django.forms import model_to_dict
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.views import generic
 from rest_framework import generics
 
 # В представление (view) попадает строка запроса вида http://127.0.0.1:8000/women/madonna/
@@ -19,6 +20,11 @@ from silk.profiling.profiler import silk_profile
 from personal_site.forms import AddPostForm
 from personal_site.models import Women, Article, ArticleTags, Category, ArticleImages
 from personal_site.serializers import WomenSerializer, ArticleSerializer
+
+
+class WomenAPIList(generics.ListCreateAPIView):
+    queryset = Women.objects.all()
+    serializer_class = WomenSerializer
 
 
 class WomenAPIView(APIView):
