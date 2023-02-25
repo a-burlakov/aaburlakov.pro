@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
-from rest_framework import generics
+from rest_framework import generics, viewsets
 
 # В представление (view) попадает строка запроса вида http://127.0.0.1:8000/women/madonna/
 # Представление по внутренней логике собирает информацию по Model и Templates
@@ -22,79 +22,29 @@ from personal_site.models import Women, Article, ArticleTags, Category, ArticleI
 from personal_site.serializers import WomenSerializer, ArticleSerializer
 
 
-class WomenAPIList(generics.ListCreateAPIView):
+# можно сюда прописать viewsets.ReadOnlyModelViewSet - тогда этот базовый
+# класс будет позволять нам делать только чтение.
+class WomenViewSet(viewsets.ModelViewSet):
     queryset = Women.objects.all()
     serializer_class = WomenSerializer
 
 
-class WomenAPIUpdate(generics.UpdateAPIView):
-    # Пусть queryset у нас берет all, все равно из-за наследованной
-    # вьюшки мы возвратим только единственную запись. Она возвратится,
-    # потому что кверисеты ленивые, и остановятся на первой записи
-    # (как-то так)
-    queryset = Women.objects.all()
-    serializer_class = WomenSerializer
-
-
-# Эта вьюшка умеет делать вообще весь CRUD, вау.
-class WomenAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Women.objects.all()
-    serializer_class = WomenSerializer
-
-
-# class WomenAPIView(APIView):
-#     def get(self, request):
-#         w = Women.objects.all().values()
-#         # параметр "many" говорит о том, что сериализатору нужно
-#         # выдавать не одну запись, а много
-#         return Response(
-#             {"posts": WomenSerializer(w, many=True).data},
-#         )
+# class WomenAPIList(generics.ListCreateAPIView):
+#     queryset = Women.objects.all()
+#     serializer_class = WomenSerializer
 #
-#     def post(self, request):
-#         serializer = WomenSerializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
 #
-#         return Response({"post": serializer.data})
+# class WomenAPIUpdate(generics.UpdateAPIView):
+#     # Пусть queryset у нас берет all, все равно из-за наследованной
+#     # вьюшки мы возвратим только единственную запись. Она возвратится,
+#     # потому что кверисеты ленивые, и остановятся на первой записи
+#     # (как-то так)
+#     queryset = Women.objects.all()
+#     serializer_class = WomenSerializer
 #
-#     # Метод PUT служит для изменения или вставки ресурса. В требовании изменения
-#     # должен быть задан уникальный ID указанного ресурса.
-#     def put(self, request, *args, **kwargs):
-#         # в PUT мы изменяем объет. Предполагается, что pk мы передаем.
-#         # здесь ищем этот pk
-#         pk = kwargs.get("pk", None)
-#         if not pk:
-#             return Response({"error": "Method PUT not allowed"})
 #
-#         # по PK ищем наш объект.
-#         try:
-#             instance = Women.objects.get(pk=pk)
-#         except:
-#             return Response({"error": "Object does not exist"})
-#
-#         # когда нашли, по помещаем в сериализатор данные из запроса,
-#         # проверяем и передаем, что все ок.
-#         serializer = WomenSerializer(data=request.data, instance=instance)
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-#         return Response({"post": serializer.data})
-#
-#     def delete(self, request, *args, **kwargs):
-#         pk = kwargs.get("pk", None)
-#         if not pk:
-#             return Response({"error": "Method DELETE not allowed"})
-#
-#         try:
-#             instance = Women.objects.get(pk=pk)
-#             instance.delete()
-#         except:
-#             return Response({"error": "Object could not be deleted"})
-#
-#         return Response({"post": "delete post " + str(pk)})
-
-
-# class WomenAPIView(generics.ListAPIView):
+# # Эта вьюшка умеет делать вообще весь CRUD, вау.
+# class WomenAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
 #     queryset = Women.objects.all()
 #     serializer_class = WomenSerializer
 

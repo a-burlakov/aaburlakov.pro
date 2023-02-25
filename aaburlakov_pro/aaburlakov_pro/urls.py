@@ -19,9 +19,18 @@ from django.urls import path, include, re_path
 
 from aaburlakov_pro import settings
 from personal_site.views import *
+from rest_framework import routers
 
 # В этом файле мы связываем url, которые ввел пользователь, с views из наших
 # приложений.
+# Роутеры позволяют в одну строку обозначить все обыкновенные маршруты для
+# контроллера ресурса, которые мы сделали. Контроллер ресурса здесь - это
+# вот WomenViewSet, а ресурс - объекты модели women.
+router = routers.SimpleRouter()
+router.register(r"women", WomenViewSet)
+# роутер формирует url следующие:
+# http://127.0.0.1:8000/api/v1/women/ - для извлечения списка записей;
+# http://127.0.0.1:8000/api/v1/women/pk/ - для работы с конкретной записью.
 
 urlpatterns = [
     # path("", index), # http://127.0.0.1:8000/
@@ -51,9 +60,12 @@ urlpatterns = [
     # и Django поймет, что нужно перенаправить на этот путь
     # path("", index, name="home"),
     path("silk/", include("silk.urls", namespace="silk")),
-    path("api/v1/womenlist/", WomenAPIList.as_view()),
-    path("api/v1/womenlist/<int:pk>/", WomenAPIUpdate.as_view()),
-    path("api/v1/womendetail/<int:pk>/", WomenAPIDetailView.as_view()),
+    # path("api/v1/womenlist/", WomenViewSet.as_view({"get": "list"})),
+    # path("api/v1/womenlist/<int:pk>/", WomenViewSet.as_view({"get": "update"})),
+    # path("api/v1/womendetail/<int:pk>/", WomenViewSet.as_view()),
+    # Мы можем на роутер зарегистрировать наш вью сет, и модель, и этот роутер
+    # будет возвращать нам коллекцию URL'ов.
+    path("api/v1/", include(router.urls)),
     path("api/v1/recentarticles/", RecentArticlesAPIView.as_view()),
 ]
 
