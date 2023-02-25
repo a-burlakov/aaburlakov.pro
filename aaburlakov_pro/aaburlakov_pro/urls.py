@@ -26,11 +26,20 @@ from rest_framework import routers
 # Роутеры позволяют в одну строку обозначить все обыкновенные маршруты для
 # контроллера ресурса, которые мы сделали. Контроллер ресурса здесь - это
 # вот WomenViewSet, а ресурс - объекты модели women.
+#
+# Параметр basename нужен для того, чтобы прописывать базовое имя в URL'ах.
+
 router = routers.SimpleRouter()
-router.register(r"women", WomenViewSet)
+router.register(r"women", WomenViewSet, basename="women")
+
+print(router.urls)
 # роутер формирует url следующие:
 # http://127.0.0.1:8000/api/v1/women/ - для извлечения списка записей;
 # http://127.0.0.1:8000/api/v1/women/pk/ - для работы с конкретной записью.
+# Есть ещё DefaultRouter. Он отличается от SimpleRouter только тем, что создает
+# еще путь:
+# http://127.0.0.1:8000/api/v1/
+
 
 urlpatterns = [
     # path("", index), # http://127.0.0.1:8000/

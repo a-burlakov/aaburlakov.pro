@@ -13,6 +13,7 @@ from rest_framework import generics, viewsets
 # данными. Это и есть MTV (MVC).
 # Представления в терминологии MVC - это контроллеры.
 from django.views.generic import ListView, DetailView, CreateView
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from silk.profiling.profiler import silk_profile
@@ -27,6 +28,14 @@ from personal_site.serializers import WomenSerializer, ArticleSerializer
 class WomenViewSet(viewsets.ModelViewSet):
     queryset = Women.objects.all()
     serializer_class = WomenSerializer
+
+    # detail false значит, что будет список
+    # этот декоратор помещается в URL'ки, которые будут у роутера, связанного
+    # с этим вьюсетом.
+    @action(methods=["get"], detail=False)
+    def category(self, request):
+        cats = Category.objects.all()
+        return Response({"cats": [c.name for c in cats]})
 
 
 # class WomenAPIList(generics.ListCreateAPIView):
