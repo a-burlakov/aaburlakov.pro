@@ -26,7 +26,7 @@ from personal_site.serializers import WomenSerializer, ArticleSerializer
 # можно сюда прописать viewsets.ReadOnlyModelViewSet - тогда этот базовый
 # класс будет позволять нам делать только чтение.
 class WomenViewSet(viewsets.ModelViewSet):
-    queryset = Women.objects.all()
+    # queryset = Women.objects.all()
     serializer_class = WomenSerializer
 
     # detail false значит, что будет список
@@ -36,6 +36,12 @@ class WomenViewSet(viewsets.ModelViewSet):
     def category(self, request):
         cats = Category.objects.all()
         return Response({"cats": [c.name for c in cats]})
+
+    # Этот метод позволяет убрать атрибут queryset и определить произвольные
+    # правила поиска данных.
+    # Но в этом случае необходимо установить basename в роутере в url.py.
+    def get_queryset(self):
+        return Women.objects.all()[:3]
 
 
 # class WomenAPIList(generics.ListCreateAPIView):
