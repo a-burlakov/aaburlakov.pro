@@ -78,6 +78,8 @@ urlpatterns = [
     path("api/v1/women/", WomenAPIList.as_view()),
     path("api/v1/women/<int:pk>/", WomenAPIUpdate.as_view()),
     path("api/v1/womendelete/<int:pk>/", WomenAPIDestroy.as_view()),
+    # С помощью этой строки, по сути, можно включить поддержку авторизаций по сессиям.
+    path("api/v1/drf-auth/", include("rest_framework.urls")),
 ]
 
 # На отладочном веб-сервере необходимо сэмулировать работу настоящего сервера
