@@ -28,6 +28,7 @@ from rest_framework import routers
 # вот WomenViewSet, а ресурс - объекты модели women.
 #
 # Параметр basename нужен для того, чтобы прописывать базовое имя в URL'ах.
+# DRF может еще делать авторизацию не только по сессиям, по и по токенам и JRF-токенам.
 
 router = routers.SimpleRouter()
 # router.register(r"women", WomenViewSet, basename="women")
