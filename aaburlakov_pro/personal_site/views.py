@@ -14,6 +14,11 @@ from rest_framework import generics, viewsets
 # Представления в терминологии MVC - это контроллеры.
 from django.views.generic import ListView, DetailView, CreateView
 from rest_framework.decorators import action
+from rest_framework.permissions import (
+    IsAuthenticated,
+    IsAuthenticatedOrReadOnly,
+    IsAdminUser,
+)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from silk.profiling.profiler import silk_profile
@@ -23,25 +28,44 @@ from personal_site.models import Women, Article, ArticleTags, Category, ArticleI
 from personal_site.serializers import WomenSerializer, ArticleSerializer
 
 
-# можно сюда прописать viewsets.ReadOnlyModelViewSet - тогда этот базовый
-# класс будет позволять нам делать только чтение.
-class WomenViewSet(viewsets.ModelViewSet):
-    # queryset = Women.objects.all()
+class WomenAPIList(generics.ListCreateAPIView):
+    queryset = Women.objects.all()
+    serializer_class = WomenSerializer
+    # Это добавление прав.
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+
+class WomenAPIUpdate(generics.RetrieveUpdateAPIView):
+    queryset = Women.objects.all()
     serializer_class = WomenSerializer
 
-    # detail false значит, что будет список
-    # этот декоратор помещается в URL'ки, которые будут у роутера, связанного
-    # с этим вьюсетом.
-    @action(methods=["get"], detail=False)
-    def category(self, request):
-        cats = Category.objects.all()
-        return Response({"cats": [c.name for c in cats]})
 
-    # Этот метод позволяет убрать атрибут queryset и определить произвольные
-    # правила поиска данных.
-    # Но в этом случае необходимо установить basename в роутере в url.py.
-    def get_queryset(self):
-        return Women.objects.all()[:3]
+class WomenAPIDestroy(generics.RetrieveDestroyAPIView):
+    queryset = Women.objects.all()
+    serializer_class = WomenSerializer
+    # Мы тут можем сделать так, что этой штукой пользоваться может только admin.
+    permission_classes = (IsAdminUser,)
+
+
+# # можно сюда прописать viewsets.ReadOnlyModelViewSet - тогда этот базовый
+# # класс будет позволять нам делать только чтение.
+# class WomenViewSet(viewsets.ModelViewSet):
+#     # queryset = Women.objects.all()
+#     serializer_class = WomenSerializer
+#
+#     # detail false значит, что будет список
+#     # этот декоратор помещается в URL'ки, которые будут у роутера, связанного
+#     # с этим вьюсетом.
+#     @action(methods=["get"], detail=False)
+#     def category(self, request):
+#         cats = Category.objects.all()
+#         return Response({"cats": [c.name for c in cats]})
+#
+#     # Этот метод позволяет убрать атрибут queryset и определить произвольные
+#     # правила поиска данных.
+#     # Но в этом случае необходимо установить basename в роутере в url.py.
+#     def get_queryset(self):
+#         return Women.objects.all()[:3]
 
 
 # class WomenAPIList(generics.ListCreateAPIView):

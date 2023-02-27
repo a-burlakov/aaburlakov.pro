@@ -30,7 +30,7 @@ from rest_framework import routers
 # Параметр basename нужен для того, чтобы прописывать базовое имя в URL'ах.
 
 router = routers.SimpleRouter()
-router.register(r"women", WomenViewSet, basename="women")
+# router.register(r"women", WomenViewSet, basename="women")
 
 print(router.urls)
 # роутер формирует url следующие:
@@ -74,8 +74,10 @@ urlpatterns = [
     # path("api/v1/womendetail/<int:pk>/", WomenViewSet.as_view()),
     # Мы можем на роутер зарегистрировать наш вью сет, и модель, и этот роутер
     # будет возвращать нам коллекцию URL'ов.
-    path("api/v1/", include(router.urls)),
     path("api/v1/recentarticles/", RecentArticlesAPIView.as_view()),
+    path("api/v1/women/", WomenAPIList.as_view()),
+    path("api/v1/women/<int:pk>/", WomenAPIUpdate.as_view()),
+    path("api/v1/womendelete/<int:pk>/", WomenAPIDestroy.as_view()),
 ]
 
 # На отладочном веб-сервере необходимо сэмулировать работу настоящего сервера

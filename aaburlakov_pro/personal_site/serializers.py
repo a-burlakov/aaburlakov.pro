@@ -15,6 +15,9 @@ from .models import Women, Article
 
 
 class WomenSerializer(serializers.ModelSerializer):
+    # Здесь происходит автоматическая установка пользователя в модель.
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault)
+
     class Meta:
         model = Women
         # fields = ("title", "content", "cat")
