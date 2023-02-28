@@ -7,8 +7,6 @@ For more information on this file, see
 https://docs.djangoproject.com/en/4.1/howto/deployment/wsgi/
 """
 
-# WSGI - это Web Server Gateway Interface. Это стандарт взаимодействия между
-# программой на Python (Django в нашем случае) и веб-сервером (Apache, Nginx...)
 
 import os
 
