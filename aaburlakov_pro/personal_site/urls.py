@@ -4,20 +4,14 @@ from django.views.decorators.cache import cache_page
 from .views import *
 
 urlpatterns = [
-    path("", WomenHome.as_view(), name="home"),
-    # path("aaburlakov/", cache_page(60 * 15)(aaburlakov), name="aaburlakov"),
-    path("aaburlakov/", (aaburlakov), name="aaburlakov"),
+    # TODO: вернуть кэш
+    # path("", cache_page(60 * 15)(aaburlakov), name="home"),
+    path("", (aaburlakov), name="home"),
     path(
-        "aaburlakov/blog/<slug:slug>/",
+        "blog/<slug:slug>/",
         # cache_page(60 * 15)(ArticleDetail.as_view()),
         (ArticleDetail.as_view()),
         name="article_detail",
     ),
-    path("about/", about, name="about"),
-    path("addpage/", addpage, name="add_page"),
-    path("contact/", contact, name="contact"),
-    path("login/", login, name="login"),
-    path("register/", RegisterUser.as_view(), name="register"),
-    path("post_women/<int:post_id>/", show_post, name="post_women"),
-    path("category/<slug:cat_slug>/", WomenCategory.as_view(), name="category"),
+    path("api/v1/recentarticles/", RecentArticlesAPIView.as_view()),
 ]
