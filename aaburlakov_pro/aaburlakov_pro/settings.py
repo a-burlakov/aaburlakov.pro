@@ -10,44 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
-# Best practice to make project structure.
-# https://studygyaan.com/wp-content/uploads/2019/07/Best-Practice-to-Structure-Django-Project-Directories-and-Files.png?ezimgfmt=ngcb1/notWebP
-# .
-# ├── apps
-# │   └── app_1
-# │       ├── admin.py
-# │       ├── apps.py
-# │       ├── __init__.py
-# │       ├── migrations
-# │       │   └── __init__.py
-# │       ├── models.py
-# │       ├── tests.py
-# │       └── views.py
-# ├── django_project
-# │   ├── __init__.py
-# │   ├── __pycache__
-# │   │   ├── __init__.cpython-35.pyc
-# │   │   └── settings.cpython-35.pyc
-# │   ├── settings.py
-# │   ├── urls.py
-# │   └── wsgi.py
-# ├── manage.py
-# ├── media
-# ├── static
-# └── templates
 
-# Основная логика работы Django может быть описана так:
-# - клиент делает запрос к нам на сервер
-# - запрос попадает на Web-сервер (Apache, Nginx...)
-# - далее Web-сервер через интерфейс wsgi (есть еще асинхронный asgi) передает
-# этот запрос в фреймворк Django
-# - сам Django, исходя из представлений (Views) конкретного своего приложения
-# формирует HTML и возвращает ответ в Web-сервер, а тот - клиенту
-# Это, конечно, все очень упрощенно.
 import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -63,8 +29,6 @@ DEBUG = True
 ALLOWED_HOSTS = ["127.0.0.1"]
 
 
-# Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -73,13 +37,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-    "personal_site.apps.PersonalSiteConfig",  # Здесь мы не просто обращаемся к приложению personal_site, а к конкретному его классу из файла apps.py. Это упрощает разработку.
+    "personal_site.apps.PersonalSiteConfig",
     "rest_framework",
     "debug_toolbar",
     "silk",
 ]
 
-SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -90,7 +53,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    # "silk.middleware.SilkyMiddleware",
+    "silk.middleware.SilkyMiddleware",
 ]
 
 REST_FRAMEWORK = {
@@ -181,16 +144,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-# Статические файлы - это файлы, которые идут вместе с проектом.
 STATICFILES_DIRS = []
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-# MEDIA_ROOT обозначает, в какой папке будут храниться файлы, которые загрузил
-# пользователь.
-# Медиа файлы - это файлы, котоыре появляются в ходе работы с проектом. Например,
-# аватарки пользователей, или фотографии их, или даже кэш.
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-# MEDIA_URL добавляет к URL файлов префикс, который указан в переменной.
 MEDIA_URL = "/media/"

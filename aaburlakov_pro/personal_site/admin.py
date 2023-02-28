@@ -4,12 +4,6 @@ from .models import *
 # https://docs.djangoproject.com/en/4.1/ref/contrib/admin/
 
 
-class WomenAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "time_create", "slug", "photo", "is_published")
-    list_display_links = ("id", "title")
-    search_fields = ("title", "content")
-
-
 class ArticleImagesInline(admin.TabularInline):
     fk_name = "article"
     model = ArticleImages
@@ -48,4 +42,3 @@ class ArticleImagesAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(ArticleTags)
-admin.site.register(Women, WomenAdmin)
