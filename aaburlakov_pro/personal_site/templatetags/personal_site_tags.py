@@ -15,7 +15,10 @@ def article_list(article_type: str):
     articles = (
         Article.objects.filter(archived=False, article_type=article_type)
         .prefetch_related(
-            Prefetch("images", queryset=ArticleImages.objects.filter(default=True))
+            Prefetch(
+                "images",
+                queryset=ArticleImages.objects.filter(default=True).only("image"),
+            ),
         )
         .prefetch_related(
             Prefetch("tags", queryset=ArticleTags.objects.filter(archived=False))
