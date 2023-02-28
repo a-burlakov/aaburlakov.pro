@@ -71,7 +71,7 @@ class Article(models.Model):
         """
         Returns url for image that can be put to article thumbnail.
         """
-        return settings.MEDIA_URL + "article_images/standard-thumbnail-image.png.png"
+        return settings.MEDIA_URL + "article_images/standard-thumbnail-image.png"
 
     def tags_line(self) -> str:
         """

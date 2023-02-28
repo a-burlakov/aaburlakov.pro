@@ -26,8 +26,9 @@ def article_list(article_type: str):
     for article in articles:
         article.tags_line = article.tags_line()
         article.tags_line_for_html = article.tags_line_for_html()
-        if article.images:
-            article.default_image_path = article.images[0].image.url
+        default_images = article.images.all()
+        if default_images:
+            article.default_image_path = default_images[0].image.url
         else:
             article.default_image_path = article.url_for_standard_thumbnail_image()
 
