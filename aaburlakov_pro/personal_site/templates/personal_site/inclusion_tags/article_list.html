@@ -1,7 +1,7 @@
 {% load static %}
 {% load i18n %}
 {% block blog %}
-    <!-- ======= секция блога======= -->
+
     <section id="{{ section_id }}" class="portfolio">
         <div class="container">
             <div class="row">
@@ -35,7 +35,8 @@
                                     </h4>
                                     <p>{{ article.sub_title }}</p>
                                     {% language 'ru' %}
-                                        <div class="blog-post-date">{{ article.date|date:"j E Y г." }}
+                                        <div class="blog-post-date">
+                                            {{ article.date|date:"j E Y г." }}
                                             • {{ article.time_to_read }} </div>
                                     {% endlanguage %}
                                     <div class="blog-post-tags">{{ article.tags_line }}</div>
@@ -49,5 +50,5 @@
                 {% endblock %}
             </div>
         </div>
-    </section><!-- конец блога -->
+    </section>
 {% endblock %}

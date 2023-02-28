@@ -3,8 +3,8 @@
 
 {% block header %}
 
-    <!--Предзагрузка картинок, которые будут меняться анимацией,
-    чтобы не мигали при первом появлении во время смены друг друга.-->
+    {# Preload pictures that will change animation, #}
+    {# so they don't blink the first time they appear during each other's change #}
     <div style="position:fixed;left:9999px;opacity:0;">
         <img src="{% static 'personal_site/img/transparent.jpg' %}">
         <img src="{% static 'personal_site/img/bg-1.jpg' %}">
@@ -12,10 +12,9 @@
         <img src="{% static 'personal_site/img/bg-3.jpg' %}">
     </div>
 
-    <!-- Image to make background semi-transparent for some pages.    -->
+    {# Image to make background semi-transparent for some pages. #}
     <img id="transparent-image" src="{% static 'personal_site/img/transparent.jpg' %}">
 
-    <!-- Хедер -->
     <header id="header">
         <div class="container">
             <h1><a class="main-title" href="#header">Алексей Бурлаков</a></h1>
@@ -28,7 +27,7 @@
                     <li><a class="nav-link" href="#about_me">Обо мне</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav><!-- Навигация -->
+            </nav>
 
             <div class="recent-posts">
                 <div class="block-title">
@@ -42,7 +41,8 @@
                                 <a href="{{ post.get_absolute_url }}">
                                     <div class="post-title">{{ post.title }}</div>
                                     {% language 'ru' %}
-                                        <div class="post-date">{{ post.date|date:"j E, Y" }}
+                                        <div class="post-date">
+                                            {{ post.date|date:"j E, Y" }}
                                             • {{ post.time_to_read }} </div>
                                     {% endlanguage %}
                                 </a>
