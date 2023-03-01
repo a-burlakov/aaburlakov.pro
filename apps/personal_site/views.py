@@ -6,6 +6,19 @@ from .models import Article, ArticleTags, ArticleImages
 from .serializers import ArticleSerializer
 
 
+def header_data() -> dict:
+    return {
+        "title_name": "Алексей Бурлаков",
+        "subtitle_span": "Python",
+        "subtitle_text": "-разработчик",
+        "email": "fln@mail.ru",
+        "telegram": "https://t.me/aaburlakov",
+        "vk": "https://vk.com/a_a_burlakov",
+        "github": "https://github.com/a-burlakov",
+        "linkedin": "",
+    }
+
+
 def aaburlakov(request):
     """
     View to show full one-page site.
@@ -19,7 +32,7 @@ def aaburlakov(request):
     content = {
         "recent_posts": recent_posts,
         "tags": tags,
-    }
+    } | header_data()
     return render(request, "personal_site/index.html", content)
 
 
