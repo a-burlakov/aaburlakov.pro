@@ -11,7 +11,6 @@ def article_list(article_type: str):
     """
     Tag to show articles list at site depending on article type.
     """
-    # TODO: может, тут надо сделать select_related для картинок?
     articles = (
         Article.objects.filter(archived=False, article_type=article_type)
         .prefetch_related(
