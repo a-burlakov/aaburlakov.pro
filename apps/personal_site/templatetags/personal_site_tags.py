@@ -1,7 +1,7 @@
 from django import template
 from django.db.models import Prefetch
 
-from personal_site.models import *
+from apps.personal_site.models import Article, ArticleImages, ArticleTags
 
 register = template.Library()
 

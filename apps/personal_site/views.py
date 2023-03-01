@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView
 from rest_framework import generics
 
-from personal_site.models import Article, ArticleTags, ArticleImages
-from personal_site.serializers import ArticleSerializer
+from .models import Article, ArticleTags, ArticleImages
+from .serializers import ArticleSerializer
 
 
 def aaburlakov(request):
