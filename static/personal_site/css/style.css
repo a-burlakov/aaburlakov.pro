@@ -201,7 +201,8 @@ h1, h2, h3, h4, h5, h6 {
 
 #header .posts-list .post-title {
     color: rgb(58 57 61);
-    font-size: 14px;
+    font-size: 16px;
+    font-family: "Raleway", sans-serif;
 }
 
 #header .posts-list .post-date {

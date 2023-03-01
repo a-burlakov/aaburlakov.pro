@@ -28,7 +28,9 @@ def aaburlakov(request):
         .order_by("-date")
         .only("title", "date", "slug", "text")[:5]
     )
+
     tags = ArticleTags.objects.filter(archived=False)
+
     content = {
         "recent_posts": recent_posts,
         "tags": tags,
