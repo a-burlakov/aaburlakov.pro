@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
     "0.0.0.0",
     "localhost",
     "95.163.240.150",
+    "aaburlakov.ru",
 ]
 
 
