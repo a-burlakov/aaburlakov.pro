@@ -1,3 +1,3 @@
-# aaburlakov.pro (or .ru)
+# aaburlakov.ru
 🐱‍💻 Personal site. Made with Django.
 
