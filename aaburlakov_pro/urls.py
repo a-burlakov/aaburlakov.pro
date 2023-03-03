@@ -1,8 +1,7 @@
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.template.defaulttags import url
-from django.urls import path, include
-from django.views.static import serve
+from django.urls import path, include, re_path
+from django.views.static import serve as mediaserve
 
 from aaburlakov_pro import settings
 
@@ -23,14 +22,14 @@ if settings.DEBUG:
 
 else:
     urlpatterns += [
-        url(
+        re_path(
             f'^{settings.MEDIA_URL.lstrip("/")}(?P<path>.*)$',
-            serve,
+            mediaserve,
             {"document_root": settings.MEDIA_ROOT},
         ),
-        url(
+        re_path(
             f'^{settings.STATIC_URL.lstrip("/")}(?P<path>.*)$',
-            serve,
+            mediaserve,
             {"document_root": settings.STATIC_ROOT},
         ),
     ]
