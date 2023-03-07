@@ -163,6 +163,7 @@ h1, h2, h3, h4, h5, h6 {
     color: rgb(58 57 61);
     line-height: 1;
     display: inline-block;
+    cursor: pointer;
 }
 
 #header .header-top h1 a {
@@ -1059,7 +1060,7 @@ section .container {
 }
 
 .portfolio-details .container {
-    padding-top: 20px;
+    padding-top: 80px;
     padding-bottom: 40px;
 }
 
@@ -1154,7 +1155,6 @@ section .container {
     max-height: 200px;
     margin-bottom: 20px;
     object-fit: cover;
-    border: 1px solid #70757b;
     opacity: 1;
 }
 
