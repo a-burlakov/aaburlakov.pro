@@ -3,7 +3,6 @@
   <component name="ProjectTasksOptions">
     <enabled-global>
       <option value="Black" />
-      <option value="black" />
     </enabled-global>
   </component>
 </project>
