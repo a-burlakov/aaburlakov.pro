@@ -1149,6 +1149,7 @@ section .container {
     max-height: 200px;
     margin-bottom: 20px;
     object-fit: cover;
+    border: 1px solid rgb(58 57 61 / 80%);
 }
 
 .blog-image-link {
