@@ -8,6 +8,7 @@ from .serializers import ArticleSerializer
 
 def header_data() -> dict:
     return {
+        "page_title": "Алексей Бурлаков | Python-разработчик",
         "title_name": "Алексей Бурлаков",
         "subtitle_span": "Python",
         "subtitle_text": "-разработчик",
@@ -48,6 +49,7 @@ class ArticleDetail(DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["page_title"] = self.object.title
         return context
 
 
