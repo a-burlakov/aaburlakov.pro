@@ -289,7 +289,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Header Top */
 #header.header-top:not(.header-detail) {
     height: 80px;
-    position: fixed;
+    /*position: fixed;*/
     left: 0;
     top: 0;
     right: 0;
