@@ -3,15 +3,6 @@
 
 {% block header %}
 
-    {# Preloading pictures that will change animation, #}
-    {# so they don't blink the first time they appear during change. #}
-    <div style="position:fixed;left:9999px;opacity:0;">
-        <img src="{% static 'personal_site/img/transparent.jpg' %}">
-        <img src="{% static 'personal_site/img/bg-1.jpg' %}">
-        <img src="{% static 'personal_site/img/bg-2.jpg' %}">
-        <img src="{% static 'personal_site/img/bg-3.jpg' %}">
-    </div>
-
     {# Image to make background semi-transparent for all pages except main one. #}
     <img id="transparent-image" src="{% static 'personal_site/img/transparent.jpg' %}">
 
