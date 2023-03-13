@@ -143,8 +143,8 @@ h1, h2, h3, h4, h5, h6 {
 #header .container {
     width: auto;
     padding: 20px;
-    padding-left: 7%;
-    padding-right: 7%;
+    padding-left: 6%;
+    padding-right: 6%;
     margin-left: 0px;
 }
 
@@ -287,13 +287,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Header Top */
-#header.header-top {
+#header.header-top:not(.header-detail) {
     height: 80px;
     position: fixed;
     left: 0;
     top: 0;
     right: 0;
     /* background: #c5d6dd; */
+}
+
+#header.header-top.header-detail {
+    height: 80px;
 }
 
 #header.header-top .social-links, #header.header-top .recent-posts, #header.header-top h2 {
@@ -1060,7 +1064,6 @@ section .container {
 }
 
 .portfolio-details .container {
-    padding-top: 80px;
     padding-bottom: 40px;
 }
 
