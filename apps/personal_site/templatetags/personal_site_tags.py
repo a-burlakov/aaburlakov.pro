@@ -12,7 +12,9 @@ def article_list(article_type: str):
     Tag to show articles list at site depending on article type.
     """
     articles = (
-        Article.objects.filter(archived=False, article_type=article_type)
+        Article.objects.filter(
+            archived=False, article_type=article_type, access_by_link=False
+        )
         .prefetch_related(
             Prefetch(
                 "images",

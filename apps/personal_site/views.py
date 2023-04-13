@@ -25,12 +25,12 @@ def aaburlakov(request):
     View to show full one-page site.
     """
     recent_posts = (
-        Article.objects.filter(archived=False, article_type="BL")
+        Article.objects.filter(archived=False, article_type="BL", access_by_link=False)
         .order_by("-date")
         .only("title", "date", "slug", "text")[:5]
     )
 
-    tags = ArticleTags.objects.filter(archived=False)
+    tags = ArticleTags.objects.filter(archived=False, access_by_link=False)
 
     content = {
         "recent_posts": recent_posts,
@@ -54,8 +54,8 @@ class ArticleDetail(DetailView):
 
 
 class RecentArticlesAPIView(generics.ListAPIView):
-    queryset = Article.objects.filter(archived=False, article_type="BL").order_by(
-        "-date"
-    )[:5]
+    queryset = Article.objects.filter(
+        archived=False, article_type="BL", access_by_link=False
+    ).order_by("-date")[:5]
 
     serializer_class = ArticleSerializer
