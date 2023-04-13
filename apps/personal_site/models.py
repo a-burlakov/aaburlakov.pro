@@ -38,6 +38,7 @@ class Article(models.Model):
         "Тип", max_length=2, choices=ArticleTypes.choices, default=ArticleTypes.BLOG
     )
     archived = models.BooleanField("Архив")
+    access_by_link = models.BooleanField("Доступ по ссылке", default=False)
 
     class Meta:
         verbose_name = "Пост"
