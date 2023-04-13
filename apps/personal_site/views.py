@@ -30,7 +30,7 @@ def aaburlakov(request):
         .only("title", "date", "slug", "text")[:5]
     )
 
-    tags = ArticleTags.objects.filter(archived=False, access_by_link=False)
+    tags = ArticleTags.objects.filter(archived=False)
 
     content = {
         "recent_posts": recent_posts,
