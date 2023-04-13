@@ -18,10 +18,11 @@ class ArticleAdmin(admin.ModelAdmin):
         "slug",
         "date",
         "archived",
+        "access_by_link",
     )
     list_display_links = ("id", "title", "sub_title")
     search_fields = ("title", "sub_title", "text", "article_type")
-    list_editable = ("slug", "archived")
+    list_editable = ("slug", "archived", "access_by_link")
     prepopulated_fields = {"slug": ("title",)}
     inlines = [
         ArticleImagesInline,
