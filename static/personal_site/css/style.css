@@ -1054,7 +1054,7 @@ section .container {
 .portfolio-details {
 
     background: rgb(203 220 230);
-    position: fixed;
+    position: sticky;
     left: 0;
     right: 0;
     top: 0;
@@ -1363,7 +1363,7 @@ section .container {
 
 
 ::-webkit-scrollbar {
-    width: 7px;
+    width: 10px;
     background: #fff0;
 }
 
