@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView
+from django.urls import reverse
 from rest_framework import generics
 
 from .models import Article, ArticleTags, ArticleImages
@@ -17,6 +18,7 @@ def header_data() -> dict:
         "vk": "https://vk.com/a_a_burlakov",
         "github": "https://github.com/a-burlakov",
         "linkedin": "",
+        "resume": "https://aaburlakov.ru/media/resume.pdf",  # deeply sorry for that, but I'm not Django user anymore
     }
 
 
