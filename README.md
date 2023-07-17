@@ -1,2 +1,4 @@
-# aaburlakov.ru
-🐱‍💻 Personal site. Made with Django.
+# 🐱‍💻 Personal site. 
+Made with Django as my first for Web.
+
+![](docs/screenshot.png)
