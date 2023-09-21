@@ -6,16 +6,16 @@ from django.views.static import serve as mediaserve
 from aaburlakov_pro import settings
 
 urlpatterns = [
-    path("", include("apps.personal_site.urls")),
-    path("admin/", admin.site.urls),
+    path('', include('apps.personal_site.urls')),
+    path('admin/', admin.site.urls),
 ]
 
 if settings.DEBUG:
     import debug_toolbar
 
     urlpatterns = [
-        path("__debug__/", include(debug_toolbar.urls)),
-        path("silk/", include("silk.urls", namespace="silk")),
+        path('__debug__/', include(debug_toolbar.urls)),
+        path('silk/', include('silk.urls', namespace='silk')),
     ] + urlpatterns
 
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
@@ -25,11 +25,11 @@ else:
         re_path(
             f'^{settings.MEDIA_URL.lstrip("/")}(?P<path>.*)$',
             mediaserve,
-            {"document_root": settings.MEDIA_ROOT},
+            {'document_root': settings.MEDIA_ROOT},
         ),
         re_path(
             f'^{settings.STATIC_URL.lstrip("/")}(?P<path>.*)$',
             mediaserve,
-            {"document_root": settings.STATIC_ROOT},
+            {'document_root': settings.STATIC_ROOT},
         ),
     ]

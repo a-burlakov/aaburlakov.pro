@@ -6,25 +6,21 @@ from apps.personal_site.models import Article, ArticleImages, ArticleTags
 register = template.Library()
 
 
-@register.inclusion_tag("personal_site/inclusion_tags/article_list.html")
+@register.inclusion_tag('personal_site/inclusion_tags/article_list.html')
 def article_list(article_type: str):
     """
     Tag to show articles list at site depending on article type.
     """
     articles = (
-        Article.objects.filter(
-            archived=False, article_type=article_type, access_by_link=False
-        )
+        Article.objects.filter(archived=False, article_type=article_type, access_by_link=False)
         .prefetch_related(
             Prefetch(
-                "images",
-                queryset=ArticleImages.objects.filter(default=True).only("image"),
+                'images',
+                queryset=ArticleImages.objects.filter(default=True).only('image'),
             ),
         )
-        .prefetch_related(
-            Prefetch("tags", queryset=ArticleTags.objects.filter(archived=False))
-        )
-        .order_by("-date")
+        .prefetch_related(Prefetch('tags', queryset=ArticleTags.objects.filter(archived=False)))
+        .order_by('-date')
     )
 
     for article in articles:
@@ -36,15 +32,15 @@ def article_list(article_type: str):
         else:
             article.default_image_path = article.url_for_standard_thumbnail_image()
 
-    if article_type == "PR":
+    if article_type == 'PR':
         tags = []
-        section_id = "projects"
+        section_id = 'projects'
     else:
         tags = ArticleTags.objects.filter(archived=False)
-        section_id = "blog"
+        section_id = 'blog'
 
     return {
-        "articles": articles,
-        "tags": tags,
-        "section_id": section_id,
+        'articles': articles,
+        'tags': tags,
+        'section_id': section_id,
     }

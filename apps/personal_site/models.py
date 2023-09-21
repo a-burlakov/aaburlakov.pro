@@ -15,8 +15,8 @@ class ArticleTypes(models.TextChoices):
     Types for articles. Used as enumeration for Article model.
     """
 
-    BLOG = "BL", _("Blog post")
-    PROJECT = "PR", _("Project post")
+    BLOG = 'BL', _('Blog post')
+    PROJECT = 'PR', _('Project post')
 
 
 class Article(models.Model):
@@ -24,25 +24,23 @@ class Article(models.Model):
     Article for site blog or resume block.
     """
 
-    title = models.CharField("Название", max_length=250)
-    sub_title = models.CharField("Подзаголовок", max_length=250, blank=True)
-    date = models.DateField("Дата", null=True, blank=True)
-    text = models.TextField("Текст")
+    title = models.CharField('Название', max_length=250)
+    sub_title = models.CharField('Подзаголовок', max_length=250, blank=True)
+    date = models.DateField('Дата', null=True, blank=True)
+    text = models.TextField('Текст')
     tags = models.ManyToManyField(
-        "ArticleTags", verbose_name="Тэги", blank=True, related_name="tags"
+        'ArticleTags', verbose_name='Тэги', blank=True, related_name='tags'
     )
-    slug = models.SlugField(
-        "Путь URL", max_length=80, null=True, unique=True, db_index=True
-    )
+    slug = models.SlugField('Путь URL', max_length=80, null=True, unique=True, db_index=True)
     article_type = models.CharField(
-        "Тип", max_length=2, choices=ArticleTypes.choices, default=ArticleTypes.BLOG
+        'Тип', max_length=2, choices=ArticleTypes.choices, default=ArticleTypes.BLOG
     )
-    archived = models.BooleanField("Архив")
-    access_by_link = models.BooleanField("Доступ по ссылке", default=False)
+    archived = models.BooleanField('Архив')
+    access_by_link = models.BooleanField('Доступ по ссылке', default=False)
 
     class Meta:
-        verbose_name = "Пост"
-        verbose_name_plural = "Посты"
+        verbose_name = 'Пост'
+        verbose_name_plural = 'Посты'
 
     def __str__(self):
         return self.title
@@ -57,7 +55,7 @@ class Article(models.Model):
         """
         Returns absolute URL for an article.
         """
-        return reverse("article_detail", kwargs={"slug": self.slug})
+        return reverse('article_detail', kwargs={'slug': self.slug})
 
     @property
     def is_blog_post(self) -> bool:
@@ -72,7 +70,7 @@ class Article(models.Model):
         """
         Returns url for image that can be put to article thumbnail.
         """
-        return settings.STATIC_URL + "personal_site/img/standard-thumbnail-image.png"
+        return settings.STATIC_URL + 'personal_site/img/standard-thumbnail-image.png'
 
     def tags_line(self) -> str:
         """
@@ -80,8 +78,8 @@ class Article(models.Model):
         for showing at web-site.
         """
 
-        tags = ["#" + tag.name for tag in self.tags.all()]
-        return " ".join(tags)
+        tags = ['#' + tag.name for tag in self.tags.all()]
+        return ' '.join(tags)
 
     def tags_line_for_html(self) -> str:
         """
@@ -90,7 +88,7 @@ class Article(models.Model):
         (e.g. "article_list.html" template).
         """
         tags = list(self.tags.all())
-        return " ".join([x.name for x in tags])
+        return ' '.join([x.name for x in tags])
 
     def time_to_read(self) -> str:
         """
@@ -103,12 +101,12 @@ class Article(models.Model):
         body_length = len(self.text)
 
         if body_length < symbols_per_minute / 2:
-            time_to_read = "менее минуты на чтение"
+            time_to_read = 'менее минуты на чтение'
         elif body_length < symbols_per_minute:
-            time_to_read = "минута на чтение"
+            time_to_read = 'минута на чтение'
         else:
             minutes_to_read = (body_length // symbols_per_minute) + 1
-            time_to_read = f"{minutes_to_read} мин. на чтение"
+            time_to_read = f'{minutes_to_read} мин. на чтение'
 
         return time_to_read
 
@@ -121,14 +119,12 @@ class Article(models.Model):
 
         md_text = self.text
 
-        image_template = string.Template("![post-image]($url)")
-        caption_template = string.Template(
-            '<center class="post-image-caption">$caption</center>'
-        )
+        image_template = string.Template('![post-image]($url)')
+        caption_template = string.Template('<center class="post-image-caption">$caption</center>')
 
         images = self.images.all()
         for i, image in enumerate(images, 1):
-            image_line = f"$image_{i}"
+            image_line = f'$image_{i}'
             if image_line not in md_text:
                 continue
 
@@ -146,12 +142,10 @@ class ArticleImages(models.Model):
     Images for Articles.
     """
 
-    article = models.ForeignKey(
-        "Article", on_delete=models.CASCADE, related_name="images"
-    )
-    image = models.ImageField("Изображение", upload_to="article_images")
-    caption = models.CharField("Подпись", max_length=250, blank=True, null=True)
-    default = models.BooleanField("Титульное изображение")
+    article = models.ForeignKey('Article', on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField('Изображение', upload_to='article_images')
+    caption = models.CharField('Подпись', max_length=250, blank=True, null=True)
+    default = models.BooleanField('Титульное изображение')
 
 
 class ArticleTags(models.Model):
@@ -159,12 +153,12 @@ class ArticleTags(models.Model):
     Tags for article. Used to filter articles interactively.
     """
 
-    name = models.CharField("Название", max_length=50)
-    archived = models.BooleanField("Архив")
+    name = models.CharField('Название', max_length=50)
+    archived = models.BooleanField('Архив')
 
     class Meta:
-        verbose_name = "Тэг"
-        verbose_name_plural = "Тэги"
+        verbose_name = 'Тэг'
+        verbose_name_plural = 'Тэги'
 
     def __str__(self):
         return self.name

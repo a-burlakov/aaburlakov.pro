@@ -5,11 +5,11 @@ from .views import *
 
 
 urlpatterns = [
-    path("", (aaburlakov), name="home"),
+    path('', (aaburlakov), name='home'),
     path(
-        "blog/<slug:slug>/",
+        'blog/<slug:slug>/',
         (ArticleDetail.as_view()),
-        name="article_detail",
+        name='article_detail',
     ),
-    path("api/v1/recentarticles/", RecentArticlesAPIView.as_view()),
+    path('api/v1/recentarticles/', RecentArticlesAPIView.as_view()),
 ]
